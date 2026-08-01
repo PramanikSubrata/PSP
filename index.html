@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Problem Solving with Programming (PSP) · IIIT Allahabad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #16132e;
+    --muted: #6a6a86;
+    --bg: #f8f8fd;
+    --card: #ffffff;
+    --line: #e8e6f4;
+
+    --brand: #6d28d9;      /* violet */
+    --brand-2: #06b6d4;    /* cyan   */
+
+    --notes: #2563eb;      /* blue   */
+    --notes-bg: #eff5ff;
+    --videos: #db2777;     /* pink   */
+    --videos-bg: #fdf0f7;
+    --code: #059669;       /* green  */
+    --code-bg: #ecfaf4;
+    --assign: #d97706;     /* amber  */
+    --assign-bg: #fff6ea;
+
+    --radius: 16px;
+    --shadow: 0 10px 30px -12px rgba(45, 27, 105, .18);
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(248,248,253,.82);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 62px;
+  }
+  .brand-mark {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-display); font-weight: 700; font-size: 18px;
+  }
+  .brand-badge {
+    width: 34px; height: 34px; border-radius: 9px;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    color: #fff; font-family: var(--font-mono); font-weight: 600; font-size: 15px;
+  }
+  .nav-links { display: flex; gap: 6px; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--muted);
+    padding: 8px 12px; border-radius: 9px; transition: .18s;
+  }
+  .nav-links a:hover { color: var(--brand); background: #f0ecfe; }
+  @media (max-width: 680px) { .nav-links { display: none; } }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background:
+      radial-gradient(900px 400px at 85% -10%, rgba(109,40,217,.35), transparent 60%),
+      radial-gradient(700px 400px at 0% 120%, rgba(6,182,212,.25), transparent 55%),
+      #12102c;
+    color: #fff;
+    padding: 64px 0 72px;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.05fr .95fr; gap: 44px; align-items: center;
+  }
+  @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; gap: 34px; } }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .04em;
+    color: #c9b8ff; background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.14);
+    padding: 6px 12px; border-radius: 999px; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(34px, 5vw, 52px); line-height: 1.05; letter-spacing: -.02em;
+  }
+  .hero h1 .accent {
+    background: linear-gradient(100deg, #a78bfa, #22d3ee);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lead {
+    margin-top: 18px; font-size: 16.5px; color: #cfcbe8; max-width: 40ch;
+  }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .chip {
+    font-size: 13px; font-weight: 500;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+    padding: 7px 13px; border-radius: 999px; color: #e9e6ff;
+  }
+  .chip b { color: #fff; font-weight: 600; }
+  .hero-cta { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--font-display); font-weight: 600; font-size: 14.5px;
+    padding: 12px 20px; border-radius: 11px; transition: .18s; cursor: pointer; border: none;
+  }
+  .btn-primary { background: linear-gradient(135deg, #7c3aed, #06b6d4); color: #fff; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -10px rgba(124,58,237,.7); }
+  .btn-ghost { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.2); }
+  .btn-ghost:hover { background: rgba(255,255,255,.16); }
+
+  /* Code editor signature */
+  .editor {
+    background: #0c0a1f; border: 1px solid rgba(255,255,255,.1);
+    border-radius: 14px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6);
+    overflow: hidden; font-family: var(--font-mono); font-size: 14px;
+  }
+  .editor-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 15px; background: #17142f; border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.r { background: #ff5f56; } .dot.y { background: #ffbd2e; } .dot.g { background: #27c93f; }
+  .editor-name { margin-left: 8px; color: #7b789a; font-size: 12.5px; }
+  .editor-body { padding: 18px 16px; line-height: 1.85; }
+  .editor-body .ln { display: flex; }
+  .editor-body .no { color: #4a4770; width: 26px; user-select: none; flex: none; }
+  .kw { color: #c792ea; } .fn { color: #82aaff; } .str { color: #c3e88d; }
+  .cm { color: #676992; font-style: italic; } .pp { color: #f78c6c; }
+
+  /* ---------- Section shell ---------- */
+  section { padding: 70px 0; }
+  .sec-eyebrow {
+    font-family: var(--font-mono); font-size: 13px; color: var(--brand);
+    font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+  }
+  .sec-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(26px, 4vw, 34px); letter-spacing: -.02em; margin: 8px 0 6px;
+  }
+  .sec-sub { color: var(--muted); max-width: 60ch; }
+
+  /* ---------- Course info ---------- */
+  #about { background: linear-gradient(180deg, #fff, #f8f8fd); border-bottom: 1px solid var(--line); }
+  .desc-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px 26px; box-shadow: var(--shadow); margin: 26px 0 30px;
+    border-left: 5px solid var(--brand);
+  }
+  .desc-card p { font-size: 16px; }
+  .units { display: grid; gap: 12px; }
+  .unit {
+    background: var(--card); border: 1px solid var(--line); border-radius: 13px; overflow: hidden;
+  }
+  .unit summary {
+    list-style: none; cursor: pointer; padding: 16px 20px;
+    display: flex; align-items: center; gap: 14px; font-family: var(--font-display); font-weight: 600;
+  }
+  .unit summary::-webkit-details-marker { display: none; }
+  .unit-no {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: #fff;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    padding: 4px 10px; border-radius: 7px; flex: none;
+  }
+  .unit summary .caret { margin-left: auto; color: var(--muted); transition: .2s; }
+  .unit[open] summary .caret { transform: rotate(180deg); }
+  .unit ul { padding: 4px 24px 20px 62px; color: #45435f; }
+  .unit ul li { margin: 7px 0; font-size: 14.5px; }
+  .unit ul li::marker { color: var(--brand); }
+
+  /* ---------- TA cards ---------- */
+  .ta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px; }
+  @media (max-width: 760px) { .ta-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 460px) { .ta-grid { grid-template-columns: 1fr; } }
+  .ta {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px; display: flex; align-items: center; gap: 14px; transition: .18s;
+  }
+  .ta:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: #d9d2f7; }
+  .ta-av {
+    width: 46px; height: 46px; border-radius: 12px; flex: none;
+    display: grid; place-items: center; color: #fff; font-family: var(--font-display);
+    font-weight: 700; font-size: 20px;
+  }
+  .ta-name { font-family: var(--font-display); font-weight: 600; font-size: 16px; }
+  .ta-role { color: var(--muted); font-size: 13px; }
+
+  /* ---------- Topics ---------- */
+  #topics { background: linear-gradient(180deg, #f8f8fd, #f2f0fb); }
+  .topic-tools { display: flex; align-items: center; gap: 12px; margin: 26px 0 22px; flex-wrap: wrap; }
+  .search {
+    flex: 1; min-width: 220px; position: relative;
+  }
+  .search input {
+    width: 100%; padding: 13px 16px 13px 42px; font-family: var(--font-body); font-size: 15px;
+    border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink);
+    transition: .18s;
+  }
+  .search input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 4px #efe9fe; }
+  .search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+  .count-pill {
+    font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    background: #fff; border: 1px solid var(--line); padding: 9px 14px; border-radius: 999px;
+  }
+
+  .topics-list { display: grid; gap: 14px; }
+  .topic {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    overflow: hidden; box-shadow: 0 4px 16px -10px rgba(45,27,105,.15);
+  }
+  .topic-head {
+    width: 100%; text-align: left; cursor: pointer; background: none; border: none;
+    display: flex; align-items: center; gap: 16px; padding: 18px 22px; font-family: var(--font-body);
+  }
+  .topic-head:hover { background: #faf9ff; }
+  .t-num {
+    width: 42px; height: 42px; border-radius: 11px; flex: none;
+    display: grid; place-items: center; color: #fff; font-family: var(--font-display);
+    font-weight: 700; font-size: 17px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  }
+  .t-titles { flex: 1; min-width: 0; }
+  .t-name { font-family: var(--font-display); font-weight: 600; font-size: 17px; color: var(--ink); }
+  .t-unit { font-size: 12.5px; color: var(--muted); font-family: var(--font-mono); }
+  .t-caret { color: var(--muted); transition: .25s; flex: none; }
+  .topic.open .t-caret { transform: rotate(180deg); }
+
+  .topic-body {
+    display: none; padding: 4px 22px 24px; border-top: 1px dashed var(--line);
+  }
+  .topic.open .topic-body { display: block; }
+  .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+  @media (max-width: 640px) { .res-grid { grid-template-columns: 1fr; } }
+
+  .res {
+    border: 1px solid var(--line); border-radius: 13px; padding: 15px 16px; background: #fff;
+  }
+  .res-head {
+    display: flex; align-items: center; gap: 9px; font-family: var(--font-display);
+    font-weight: 600; font-size: 14px; margin-bottom: 12px;
+  }
+  .res-ic { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; flex: none; }
+  .res.notes { border-top: 3px solid var(--notes); }
+  .res.notes .res-ic { background: var(--notes-bg); }
+  .res.videos { border-top: 3px solid var(--videos); }
+  .res.videos .res-ic { background: var(--videos-bg); }
+  .res.code { border-top: 3px solid var(--code); }
+  .res.code .res-ic { background: var(--code-bg); }
+  .res.assign { border-top: 3px solid var(--assign); }
+  .res.assign .res-ic { background: var(--assign-bg); }
+
+  .link-row {
+    display: flex; align-items: center; gap: 9px; padding: 9px 11px; border-radius: 9px;
+    font-size: 14px; font-weight: 500; transition: .15s; margin-bottom: 6px;
+    background: #faf9ff; border: 1px solid transparent;
+  }
+  .link-row:last-child { margin-bottom: 0; }
+  .link-row:hover { border-color: var(--line); transform: translateX(3px); }
+  .link-row .lbl { flex: 1; }
+  .link-row .arw { color: var(--muted); font-size: 12px; }
+  .link-row.notes:hover { background: var(--notes-bg); }
+  .link-row.videos:hover { background: var(--videos-bg); }
+  .link-row .tag { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+
+  .code-links a {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 11px 13px; border-radius: 10px; margin-bottom: 8px; font-weight: 600; font-size: 14px;
+    color: #065f46; background: var(--code-bg); border: 1px solid #cdeee0; transition: .15s;
+  }
+  .code-links a:last-child { margin-bottom: 0; }
+  .code-links a:hover { background: #059669; color: #fff; }
+  .code-links a .tag { font-family: var(--font-mono); font-size: 11px; font-weight: 500; opacity: .8; }
+
+  .assign-box { display: flex; flex-direction: column; gap: 12px; }
+  .deadline {
+    display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono);
+    font-size: 13px; color: #92400e; background: var(--assign-bg);
+    padding: 8px 12px; border-radius: 9px; border: 1px solid #fde3c0; width: fit-content;
+  }
+  .assign-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--assign); color: #fff; font-weight: 600; font-size: 14px;
+    padding: 11px 16px; border-radius: 10px; transition: .15s;
+  }
+  .assign-btn:hover { background: #b45309; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: #12102c; color: #cfcbe8; padding: 44px 0; text-align: center;
+  }
+  footer .fnote { font-family: var(--font-mono); font-size: 13px; color: #8a86ad; margin-top: 10px; }
+  footer a { color: #a78bfa; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand-mark">
+      <span class="brand-badge">&lt;/&gt;</span> PSP
+    </div>
+    <div class="nav-links">
+      <a href="#about">Course Info</a>
+      <a href="#team">Teaching Team</a>
+      <a href="#topics">Topics</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">// IIIT Allahabad · C Language</span>
+      <h1>Problem Solving <span class="accent">with Programming</span></h1>
+      <p class="lead">Your one place to learn, practice, and solve. Notes, video lectures, live compilers, and assignments — organized topic by topic.</p>
+      <div class="hero-meta">
+        <span class="chip">Instructor: <b>Dr. Mohammed Javed</b></span>
+        <span class="chip">Course code: <b>PSP</b></span>
+        <span class="chip"><b>15</b> topics</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#topics" class="btn btn-primary">Explore topics →</a>
+        <a href="#about" class="btn btn-ghost">Course info</a>
+      </div>
+    </div>
+
+    <div class="editor" aria-hidden="true">
+      <div class="editor-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="editor-name">psp.c</span>
+      </div>
+      <div class="editor-body">
+        <div class="ln"><span class="no">1</span><span class="pp">#include</span>&nbsp;<span class="str">&lt;stdio.h&gt;</span></div>
+        <div class="ln"><span class="no">2</span></div>
+        <div class="ln"><span class="no">3</span><span class="kw">int</span>&nbsp;<span class="fn">main</span>()&nbsp;{</div>
+        <div class="ln"><span class="no">4</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// learn · practice · solve</span></div>
+        <div class="ln"><span class="no">5</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">printf</span>(<span class="str">"Hello, coder!"</span>);</div>
+        <div class="ln"><span class="no">6</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span>&nbsp;<span class="pp">0</span>;</div>
+        <div class="ln"><span class="no">7</span>}</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== COURSE INFO ===== -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-eyebrow">01 · About</div>
+    <h2 class="sec-title">Course Information</h2>
+    <p class="sec-sub">Start here to understand what this course covers before diving into topics.</p>
+
+    <div class="desc-card">
+      <p><b>Course Description.</b> In this course, students learn the problem-solving concepts with programming and practice them using the C language.</p>
+    </div>
+
+    <h3 style="font-family:var(--font-display);font-weight:600;font-size:18px;margin-bottom:14px;">Course Outline</h3>
+    <div class="units" id="units"><!-- units injected by JS --></div>
+  </div>
+</section>
+
+<!-- ===== TEACHING TEAM ===== -->
+<section id="team">
+  <div class="wrap">
+    <div class="sec-eyebrow">02 · People</div>
+    <h2 class="sec-title">Teaching Team</h2>
+    <p class="sec-sub">Reach out during lab hours or via the course group for any doubts.</p>
+    <div class="ta-grid" id="ta-grid"><!-- TAs injected by JS --></div>
+  </div>
+</section>
+
+<!-- ===== TOPICS ===== -->
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-eyebrow">03 · Learn & Practice</div>
+    <h2 class="sec-title">Topics</h2>
+    <p class="sec-sub">Click any topic to open its notes, video lectures, live compilers, and assignment.</p>
+
+    <div class="topic-tools">
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="search" type="text" placeholder="Search a topic… (e.g. Pointers, Loops)" />
+      </div>
+      <span class="count-pill" id="count">15 topics</span>
+    </div>
+
+    <div class="topics-list" id="topics-list"><!-- topics injected by JS --></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div style="font-family:var(--font-display);font-weight:600;font-size:16px;">Problem Solving with Programming (PSP)</div>
+    <div class="fnote">Maintained by the PSP Teaching Team · IIIT Allahabad · Bookmark this page ⭐</div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   ✏️  EDIT ONLY THIS DATA BLOCK — the layout builds itself.
+   Replace every "#" with your real Google Drive / YouTube / PDF link.
+   Replace TA names (X, Y, Z, A, B, C) with the real names.
+   ============================================================ */
+
+// --- Same 3 compilers used for EVERY topic (no need to edit) ---
+const COMPILERS = [
+  { label: "OnlineGDB",  url: "https://www.onlinegdb.com/online_c_compiler", tag: "Write & run instantly" },
+  { label: "CodeChef",   url: "https://www.codechef.com/practice/c",         tag: "Practice ladder" },
+  { label: "HackerRank", url: "https://www.hackerrank.com/domains/c",        tag: "Structured problems" }
+];
+
+// --- Teaching Assistants (dummy names — change later) ---
+const TAS = [
+  { name: "X", role: "Teaching Assistant", color: "#6d28d9" },
+  { name: "Y", role: "Teaching Assistant", color: "#2563eb" },
+  { name: "Z", role: "Teaching Assistant", color: "#db2777" },
+  { name: "A", role: "Teaching Assistant", color: "#059669" },
+  { name: "B", role: "Teaching Assistant", color: "#d97706" },
+  { name: "C", role: "Teaching Assistant", color: "#06b6d4" }
+];
+
+// --- Course outline (Units) ---
+const UNITS = [
+  { no: "Unit 1", items: [
+    "Computer hardware, Memory, CPU, Input/Output devices",
+    "Computer Networks, LAN, File Server, WAN, WWW, GUI/CLI, Ethernet, Wi-Fi, Modem, Switches, Routers, IP Address, Proxy, Gateway",
+    "Operating Systems, Installation/Uninstallation, Disk/Directory/File system, Application Software"
+  ]},
+  { no: "Unit 2", items: [
+    "Professional Ethics for Computer Programmers",
+    "Introduction to Computer Languages, Compiling and running a program",
+    "Problem analysis (requirement analysis, program design), Algorithms, Pseudocode and Flowchart",
+    "Structure of a simple C program (preprocessor directives, #include and #define, header & library files); Debugging, Testing and Documentation (compiler, linker, run-time errors)",
+    "Basic Data Types, Constants/Literals, Expressions, Statements and Comments",
+    "Operators: Arithmetic, Relational, Logical, Boolean, Ternary, Bitwise, Conditional, Sizeof, Comma; Precedence & Associativity; implicit and explicit type conversion",
+    "Standard Input/Output, Mathematical Functions, Character Functions"
+  ]},
+  { no: "Unit 3", items: [
+    "Selection Statements (if/else, nested, switch)",
+    "Loop Structures (while, do/while, for, exit, break and continue)",
+    "Arrays: 1-D arrays, Passing arguments by value/address, 2-D arrays, Higher dimensional arrays"
+  ]},
+  { no: "Unit 4", items: [
+    "User-defined functions, Storage class and Scope, Macros, Nested and Recursive functions",
+    "Character Strings: definition and I/O, Null character, String library functions",
+    "Pointers and Addresses, Address operator, Pointer assignment, Address arithmetic, Chain of pointers, Pointers to array elements, Array of pointers, Pointers as function arguments, Functions returning pointers, Pointers and strings"
+  ]},
+  { no: "Unit 5", items: [
+    "Dynamic Memory Allocation (calloc(), malloc(), realloc(), free())",
+    "Structures: Definition & initialization, I/O, Structures as function arguments, Functions returning structures, Array of structures, Nested structures, Unions",
+    "Pointer to structure; Dynamic data structures: Linked List, Stack, Queue",
+    "Data Files: I/O statements, Reading data files, End-of-File, Generating data files"
+  ]}
+];
+
+// --- Helper to build 3 dummy links quickly ---
+const notes  = () => [
+  { label: "abc — Note 1", url: "#" },
+  { label: "abc — Note 2", url: "#" },
+  { label: "abc — Note 3", url: "#" }
+];
+const videos = () => [
+  { label: "Lecture 1", url: "#" },
+  { label: "Lecture 2", url: "#" },
+  { label: "Lecture 3", url: "#" }
+];
+
+// --- The 15 topics ---
+const TOPICS = [
+  { name: "Basic knowledge of computer",              unit: "Unit 1", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Introduction",                             unit: "Unit 2", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Data Types and Expressions",               unit: "Unit 2", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Conditionals and Branching",               unit: "Unit 3", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Loops and Iteration",                      unit: "Unit 3", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Arrays",                                   unit: "Unit 3", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Function",                                 unit: "Unit 4", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Recursion",                                unit: "Unit 4", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Two Dimensional Array",                    unit: "Unit 3", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Structures",                               unit: "Unit 5", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Pointers",                                 unit: "Unit 4", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Dynamic Memory Allocation",                unit: "Unit 5", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Linked List",                              unit: "Unit 5", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "File Handling and Command Line Argument",  unit: "Unit 5", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
+  { name: "Sorting and Searching",                    unit: "Applications", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } }
+];
+
+/* ============================================================
+   ⚙️  BELOW THIS LINE: rendering logic — no need to touch.
+   ============================================================ */
+
+// Icons (inline SVG)
+const IC = {
+  notes:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg>',
+  videos: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="10 8 16 12 10 16 10 8"/><rect x="2" y="4" width="20" height="16" rx="3"/></svg>',
+  code:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+  assign: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+  clock:  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
+};
+
+// Build units accordion
+document.getElementById("units").innerHTML = UNITS.map((u, i) => `
+  <details class="unit" ${i === 0 ? "open" : ""}>
+    <summary>
+      <span class="unit-no">${u.no}</span>
+      <span>${u.no === "Unit 1" ? "Foundations of Computing" : u.no === "Unit 2" ? "C Basics, Operators & I/O" : u.no === "Unit 3" ? "Control Flow & Arrays" : u.no === "Unit 4" ? "Functions, Strings & Pointers" : "Memory, Structures & Files"}</span>
+      <span class="caret">▾</span>
+    </summary>
+    <ul>${u.items.map(it => `<li>${it}</li>`).join("")}</ul>
+  </details>
+`).join("");
+
+// Build TA cards
+document.getElementById("ta-grid").innerHTML = TAS.map(t => `
+  <div class="ta">
+    <div class="ta-av" style="background:linear-gradient(135deg, ${t.color}, ${t.color}cc)">${t.name}</div>
+    <div>
+      <div class="ta-name">${t.name}</div>
+      <div class="ta-role">${t.role}</div>
+    </div>
+  </div>
+`).join("");
+
+// Build a resource sub-card
+function linkList(items, cls) {
+  return items.map(x => `
+    <a class="link-row ${cls}" href="${x.url}" ${x.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>
+      <span class="lbl">${x.label}</span><span class="arw">↗</span>
+    </a>`).join("");
+}
+function compilerList() {
+  return `<div class="code-links">` + COMPILERS.map(c => `
+    <a href="${c.url}" target="_blank" rel="noopener">
+      <span>${c.label}</span><span class="tag">${c.tag}</span>
+    </a>`).join("") + `</div>`;
+}
+
+// Build topics
+const listEl = document.getElementById("topics-list");
+function renderTopics(filter = "") {
+  const f = filter.trim().toLowerCase();
+  const shown = TOPICS.filter(t => t.name.toLowerCase().includes(f));
+  document.getElementById("count").textContent =
+    shown.length + (shown.length === 1 ? " topic" : " topics");
+
+  listEl.innerHTML = shown.map((t) => {
+    const realIndex = TOPICS.indexOf(t) + 1;
+    return `
+    <div class="topic" data-i="${realIndex}">
+      <button class="topic-head" aria-expanded="false">
+        <span class="t-num">${realIndex}</span>
+        <span class="t-titles">
+          <span class="t-name">${t.name}</span><br>
+          <span class="t-unit">${t.unit}</span>
+        </span>
+        <span class="t-caret">▾</span>
+      </button>
+      <div class="topic-body">
+        <div class="res-grid">
+          <div class="res notes">
+            <div class="res-head"><span class="res-ic">${IC.notes}</span> Notes</div>
+            ${linkList(t.notes, "notes")}
+          </div>
+          <div class="res videos">
+            <div class="res-head"><span class="res-ic">${IC.videos}</span> Video Lectures</div>
+            ${linkList(t.videos, "videos")}
+          </div>
+          <div class="res code">
+            <div class="res-head"><span class="res-ic">${IC.code}</span> Run Your Code</div>
+            ${compilerList()}
+          </div>
+          <div class="res assign">
+            <div class="res-head"><span class="res-ic">${IC.assign}</span> Assignment</div>
+            <div class="assign-box">
+              <span class="deadline">${IC.clock} Deadline: ${t.assignment.deadline}</span>
+              <a class="assign-btn" href="${t.assignment.url}" ${t.assignment.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>Open assignment ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+
+  // wire up accordion toggles
+  listEl.querySelectorAll(".topic-head").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const card = btn.closest(".topic");
+      const open = card.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
+}
+renderTopics();
+
+// Search
+document.getElementById("search").addEventListener("input", e => renderTopics(e.target.value));
+</script>
+</body>
+</html>
