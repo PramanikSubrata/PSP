@@ -243,6 +243,18 @@
   }
 
   .topics-list { display: grid; gap: 14px; }
+
+  .topic-link {
+    display: flex; align-items: center; gap: 16px; padding: 18px 22px;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: 0 4px 16px -10px rgba(45,27,105,.15); transition: .18s; text-decoration: none;
+  }
+  .topic-link:hover { transform: translateY(-2px); border-color: #d9d2f7; box-shadow: var(--shadow); }
+  .topic-link .t-titles { flex: 1; min-width: 0; }
+  .t-open { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--brand); white-space: nowrap; }
+  .t-arrow { display: inline-block; transition: .18s; }
+  .topic-link:hover .t-arrow { transform: translateX(4px); }
+  @media (max-width: 520px) { .t-open .t-lbl { display: none; } }
   .topic {
     background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
     overflow: hidden; box-shadow: 0 4px 16px -10px rgba(45,27,105,.15);
@@ -498,17 +510,12 @@
 
 <script>
 /* ============================================================
-   ✏️  EDIT ONLY THIS DATA BLOCK — the layout builds itself.
-   Replace every "#" with your real Google Drive / YouTube / PDF link.
-   Replace TA names (X, Y, Z, A, B, C) with the real names.
+   ✏️  Each topic below LINKS to its own page (topic.html?t=N).
+   A topic's Notes / Videos / Assignment content lives in the
+   "topics" folder as 15 subfiles: topics/1.md … topics/15.md.
+   Edit those subfiles anytime — no need to touch this HTML.
+   TA names and Course Units are still edited here.
    ============================================================ */
-
-// --- Same 3 compilers used for EVERY topic (no need to edit) ---
-const COMPILERS = [
-  { label: "OnlineGDB",  url: "https://www.onlinegdb.com/online_c_compiler", tag: "Write & run instantly" },
-  { label: "CodeChef",   url: "https://www.codechef.com/practice/c",         tag: "Practice ladder" },
-  { label: "HackerRank", url: "https://www.hackerrank.com/domains/c",        tag: "Structured problems" }
-];
 
 // --- Teaching Assistants (dummy names — change later) ---
 const TAS = [
@@ -554,35 +561,23 @@ const UNITS = [
   ]}
 ];
 
-// --- Helper to build 3 dummy links quickly ---
-const notes  = () => [
-  { label: "abc — Note 1", url: "#" },
-  { label: "abc — Note 2", url: "#" },
-  { label: "abc — Note 3", url: "#" }
-];
-const videos = () => [
-  { label: "Lecture 1", url: "#" },
-  { label: "Lecture 2", url: "#" },
-  { label: "Lecture 3", url: "#" }
-];
-
-// --- The 15 topics ---
+// --- 15 topics (name + unit). Each links to topics/N.md via topic.html?t=N ---
 const TOPICS = [
-  { name: "Basic knowledge of computer",              unit: "Unit 1", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Introduction",                             unit: "Unit 2", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Data Types and Expressions",               unit: "Unit 2", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Conditionals and Branching",               unit: "Unit 3", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Loops and Iteration",                      unit: "Unit 3", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Arrays",                                   unit: "Unit 3", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Function",                                 unit: "Unit 4", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Recursion",                                unit: "Unit 4", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Two Dimensional Array",                    unit: "Unit 3", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Structures",                               unit: "Unit 5", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Pointers",                                 unit: "Unit 4", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Dynamic Memory Allocation",                unit: "Unit 5", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Linked List",                              unit: "Unit 5", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "File Handling and Command Line Argument",  unit: "Unit 5", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } },
-  { name: "Sorting and Searching",                    unit: "Applications", notes: notes(), videos: videos(), assignment: { deadline: "TBA", url: "#" } }
+  { name: "Basic knowledge of computer",             unit: "Unit 1" },
+  { name: "Introduction",                            unit: "Unit 2" },
+  { name: "Data Types and Expressions",              unit: "Unit 2" },
+  { name: "Conditionals and Branching",              unit: "Unit 3" },
+  { name: "Loops and Iteration",                     unit: "Unit 3" },
+  { name: "Arrays",                                  unit: "Unit 3" },
+  { name: "Function",                                unit: "Unit 4" },
+  { name: "Recursion",                               unit: "Unit 4" },
+  { name: "Two Dimensional Array",                   unit: "Unit 3" },
+  { name: "Structures",                              unit: "Unit 5" },
+  { name: "Pointers",                                unit: "Unit 4" },
+  { name: "Dynamic Memory Allocation",               unit: "Unit 5" },
+  { name: "Linked List",                             unit: "Unit 5" },
+  { name: "File Handling and Command Line Argument", unit: "Unit 5" },
+  { name: "Sorting and Searching",                   unit: "Applications" }
 ];
 
 /* ============================================================
@@ -621,74 +616,25 @@ document.getElementById("ta-grid").innerHTML = TAS.map(t => `
   </div>
 `).join("");
 
-// Build a resource sub-card
-function linkList(items, cls) {
-  return items.map(x => `
-    <a class="link-row ${cls}" href="${x.url}" ${x.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>
-      <span class="lbl">${x.label}</span><span class="arw">↗</span>
-    </a>`).join("");
-}
-function compilerList() {
-  return `<div class="code-links">` + COMPILERS.map(c => `
-    <a href="${c.url}" target="_blank" rel="noopener">
-      <span>${c.label}</span><span class="tag">${c.tag}</span>
-    </a>`).join("") + `</div>`;
-}
-
-// Build topics
+// Build topics as LINKS to their own pages (topic.html?t=N)
 const listEl = document.getElementById("topics-list");
 function renderTopics(filter = "") {
   const f = filter.trim().toLowerCase();
-  const shown = TOPICS.filter(t => t.name.toLowerCase().includes(f));
+  const shown = TOPICS
+    .map((t, i) => ({ ...t, n: i + 1 }))
+    .filter(t => t.name.toLowerCase().includes(f));
   document.getElementById("count").textContent =
     shown.length + (shown.length === 1 ? " topic" : " topics");
 
-  listEl.innerHTML = shown.map((t) => {
-    const realIndex = TOPICS.indexOf(t) + 1;
-    return `
-    <div class="topic" data-i="${realIndex}">
-      <button class="topic-head" aria-expanded="false">
-        <span class="t-num">${realIndex}</span>
-        <span class="t-titles">
-          <span class="t-name">${t.name}</span><br>
-          <span class="t-unit">${t.unit}</span>
-        </span>
-        <span class="t-caret">▾</span>
-      </button>
-      <div class="topic-body">
-        <div class="res-grid">
-          <div class="res notes">
-            <div class="res-head"><span class="res-ic">${IC.notes}</span> Notes</div>
-            ${linkList(t.notes, "notes")}
-          </div>
-          <div class="res videos">
-            <div class="res-head"><span class="res-ic">${IC.videos}</span> Video Lectures</div>
-            ${linkList(t.videos, "videos")}
-          </div>
-          <div class="res code">
-            <div class="res-head"><span class="res-ic">${IC.code}</span> Run Your Code</div>
-            ${compilerList()}
-          </div>
-          <div class="res assign">
-            <div class="res-head"><span class="res-ic">${IC.assign}</span> Assignment</div>
-            <div class="assign-box">
-              <span class="deadline">${IC.clock} Deadline: ${t.assignment.deadline}</span>
-              <a class="assign-btn" href="${t.assignment.url}" ${t.assignment.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>Open assignment ↗</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  }).join("");
-
-  // wire up accordion toggles
-  listEl.querySelectorAll(".topic-head").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const card = btn.closest(".topic");
-      const open = card.classList.toggle("open");
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-  });
+  listEl.innerHTML = shown.map(t => `
+    <a class="topic-link" href="topic.html?t=${t.n}">
+      <span class="t-num">${t.n}</span>
+      <span class="t-titles">
+        <span class="t-name">${t.name}</span><br>
+        <span class="t-unit">${t.unit}</span>
+      </span>
+      <span class="t-open"><span class="t-lbl">Open</span> <span class="t-arrow">→</span></span>
+    </a>`).join("");
 }
 renderTopics();
 
