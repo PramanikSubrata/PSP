@@ -65,6 +65,7 @@
   .link-row .arw { color:var(--muted); font-size:12px; }
   .link-row.notes:hover { background:var(--notes-bg); border-color:#d7e6ff; transform:translateX(3px); }
   .link-row.videos:hover { background:var(--videos-bg); border-color:#f7d6e8; transform:translateX(3px); }
+  .link-row.assign:hover { background:var(--assign-bg); border-color:#fde3c0; transform:translateX(3px); }
   .empty { color:var(--muted); font-size:13.5px; font-style:italic; padding:6px 2px; }
 
   .code-links a { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 13px; border-radius:10px; margin-bottom:8px; font-weight:600; font-size:14px; color:#065f46; background:var(--code-bg); border:1px solid #cdeee0; transition:.15s; }
@@ -166,8 +167,7 @@ if (!n || n < 1 || n > 15) n = 1;
 function parseTopic(md) {
   const lines = md.split(/\r?\n/);
   let name = "", unit = "", mode = null, inCode = false, inComment = false;
-  const notes = [], videos = [], descLines = [];
-  let assignment = { deadline: "TBA", url: "#" };
+  const notes = [], videos = [], descLines = [], assignment = [];
   const isBoundary = (h) => {
     const t = h.trim().toLowerCase();
     return t.startsWith("note") || t.startsWith("video") || t.startsWith("assign");
@@ -175,18 +175,16 @@ function parseTopic(md) {
   for (const raw of lines) {
     const trimmed = raw.trim();
 
-    // Comments only matter outside the description
-    if (mode !== "description") {
-      if (trimmed.startsWith("<!--")) inComment = true;
-      if (inComment) { if (trimmed.includes("-->")) inComment = false; continue; }
-    }
-
-    // Code fences
+    // Code fences first (so any comment-like text inside code is preserved)
     if (trimmed.startsWith("```")) {
       if (mode === "description") descLines.push(raw);
       inCode = !inCode; continue;
     }
     if (inCode) { if (mode === "description") descLines.push(raw); continue; }
+
+    // HTML comments are ignored everywhere (they are just editor guidance)
+    if (trimmed.startsWith("<!--")) inComment = true;
+    if (inComment) { if (trimmed.includes("-->")) inComment = false; continue; }
 
     // Title
     if (trimmed.startsWith("# ") && !name) { name = trimmed.slice(2).trim(); continue; }
@@ -207,7 +205,7 @@ function parseTopic(md) {
       const label = (i >= 0 ? item.slice(0, i) : item).trim();
       let url = (i >= 0 ? item.slice(i + 1) : "#").trim();
       url = url.replace(/^["'`]+|["'`]+$/g, "").trim() || "#";
-      if (mode === "assignment") assignment = { deadline: label || "TBA", url };
+      if (mode === "assignment") assignment.push({ label: label || "TBA", url });
       else (mode === "notes" ? notes : videos).push({ label, url });
       continue;
     }
@@ -252,12 +250,15 @@ function codeCard(){
     COMPILERS.map(c => `<a href="${c.url}" target="_blank" rel="noopener"><span>${c.label}</span><span class="tag">${c.tag}</span></a>`).join("") +
     `</div></div>`;
 }
+function assignList(items){
+  if(!items.length) return '<div class="empty">Coming soon…</div>';
+  return items.map(x => `
+    <a class="link-row assign" href="${x.url}" ${x.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>
+      <span class="lbl">${x.label}</span><span class="arw">↗</span>
+    </a>`).join("");
+}
 function assignCard(t){
-  return `<div class="res assign"><div class="res-head"><span class="res-ic">${IC.assign}</span> Assignment</div>
-    <div class="assign-box">
-      <span class="deadline">${IC.clock} Deadline: ${t.assignment.deadline}</span>
-      <a class="assign-btn" href="${t.assignment.url}" ${t.assignment.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>Open assignment ↗</a>
-    </div></div>`;
+  return `<div class="res assign"><div class="res-head"><span class="res-ic">${IC.assign}</span> Assignment</div>${assignList(t.assignment)}</div>`;
 }
 
 function render(t) {
