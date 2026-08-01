@@ -22,9 +22,8 @@
   html { scroll-behavior:smooth; }
   body { font-family:var(--font-body); color:var(--ink); background:var(--bg); line-height:1.6; -webkit-font-smoothing:antialiased; }
   a { color:inherit; text-decoration:none; }
-  .wrap { max-width:1080px; margin:0 auto; padding:0 22px; }
+  .wrap { max-width:1180px; margin:0 auto; padding:0 22px; }
 
-  /* Nav */
   .nav { position:sticky; top:0; z-index:50; background:rgba(248,248,253,.85); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
   .nav-inner { display:flex; align-items:center; justify-content:space-between; height:62px; }
   .brand-mark { display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; font-size:18px; }
@@ -33,17 +32,25 @@
   .back-link { display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:14px; color:var(--brand); padding:8px 14px; border-radius:10px; border:1px solid var(--line); background:#fff; transition:.18s; }
   .back-link:hover { background:#f0ecfe; transform:translateX(-2px); }
 
-  /* Topic header */
   .topic-hero { background:radial-gradient(700px 300px at 90% -20%, rgba(109,40,217,.28), transparent 60%), #12102c; color:#fff; padding:46px 0 52px; }
   .crumb { font-family:var(--font-mono); font-size:12.5px; color:#c9b8ff; letter-spacing:.04em; }
   .topic-hero h1 { font-family:var(--font-display); font-weight:700; font-size:clamp(28px,4.5vw,42px); letter-spacing:-.02em; margin-top:14px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
   .big-num { width:54px; height:54px; border-radius:14px; display:grid; place-items:center; font-size:24px; background:linear-gradient(135deg,var(--brand),var(--brand-2)); flex:none; }
   .topic-unit { display:inline-block; margin-top:14px; font-family:var(--font-mono); font-size:13px; color:#cfcbe8; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); padding:6px 13px; border-radius:999px; }
 
-  /* Content */
-  main { padding:44px 0 70px; }
-  .res-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-  @media (max-width:640px){ .res-grid{ grid-template-columns:1fr; } }
+  main { padding:40px 0 70px; }
+
+  /* Two-column layout */
+  .layout { display:grid; gap:22px; align-items:start; }
+  .layout.has-desc { grid-template-columns:1.5fr 1fr; }
+  .layout.no-desc  { grid-template-columns:1fr; }
+  @media (max-width:900px){ .layout.has-desc { grid-template-columns:1fr; } }
+
+  .col-res { display:flex; flex-direction:column; gap:16px; }
+  .no-desc .col-res { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:640px){ .no-desc .col-res { grid-template-columns:1fr; } }
+
+  /* Resource cards */
   .res { border:1px solid var(--line); border-radius:13px; padding:16px 17px; background:#fff; box-shadow:0 4px 16px -12px rgba(45,27,105,.2); }
   .res-head { display:flex; align-items:center; gap:9px; font-family:var(--font-display); font-weight:600; font-size:15px; margin-bottom:13px; }
   .res-ic { width:28px; height:28px; border-radius:8px; display:grid; place-items:center; flex:none; }
@@ -69,6 +76,27 @@
   .deadline { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:13px; color:#92400e; background:var(--assign-bg); padding:8px 12px; border-radius:9px; border:1px solid #fde3c0; width:fit-content; }
   .assign-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; background:var(--assign); color:#fff; font-weight:600; font-size:14px; padding:11px 16px; border-radius:10px; transition:.15s; }
   .assign-btn:hover { background:#b45309; }
+
+  /* Description card (left) */
+  .desc-card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px 26px; box-shadow:0 4px 16px -12px rgba(45,27,105,.2); border-top:3px solid var(--brand); }
+  .desc-head { display:flex; align-items:center; gap:9px; font-family:var(--font-display); font-weight:600; font-size:15px; margin-bottom:14px; color:var(--brand); }
+  .desc-head .res-ic { background:#f0ecfe; }
+  .desc-body { font-size:15px; color:#2f2c48; line-height:1.75; }
+  .desc-body h1,.desc-body h2,.desc-body h3,.desc-body h4 { font-family:var(--font-display); color:var(--ink); margin:20px 0 8px; line-height:1.3; }
+  .desc-body h1{ font-size:23px; } .desc-body h2{ font-size:20px; } .desc-body h3{ font-size:17px; } .desc-body h4{ font-size:15px; }
+  .desc-body p { margin:11px 0; }
+  .desc-body ul,.desc-body ol { margin:11px 0 11px 22px; }
+  .desc-body li { margin:6px 0; }
+  .desc-body a { color:var(--brand); text-decoration:underline; }
+  .desc-body strong { color:var(--ink); }
+  .desc-body code { font-family:var(--font-mono); font-size:13px; background:#f2effa; color:#6d28d9; padding:2px 6px; border-radius:5px; }
+  .desc-body pre { background:#0c0a1f; border:1px solid #1e1b3a; border-radius:12px; padding:16px 18px; overflow-x:auto; margin:14px 0; }
+  .desc-body pre code { background:none; color:#e6e6f0; padding:0; font-size:13px; line-height:1.75; display:block; }
+  .desc-body blockquote { border-left:3px solid var(--brand); background:#f7f5ff; padding:8px 14px; margin:12px 0; border-radius:0 8px 8px 0; color:#463f66; }
+  .desc-body img { max-width:100%; border-radius:8px; }
+  .desc-body table { border-collapse:collapse; margin:12px 0; width:100%; }
+  .desc-body th,.desc-body td { border:1px solid var(--line); padding:8px 10px; font-size:14px; text-align:left; }
+  .desc-body hr { border:none; border-top:1px solid var(--line); margin:16px 0; }
 
   .state { text-align:center; padding:60px 20px; color:var(--muted); }
   .state h2 { font-family:var(--font-display); color:var(--ink); margin-bottom:8px; }
@@ -108,6 +136,8 @@
   </div>
 </footer>
 
+<!-- Markdown renderer for the Description -->
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
 <script>
 // 5 compilers — same for every topic
 const COMPILERS = [
@@ -119,6 +149,7 @@ const COMPILERS = [
 ];
 
 const IC = {
+  desc:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
   notes:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg>',
   videos: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="10 8 16 12 10 16 10 8"/><rect x="2" y="4" width="20" height="16" rx="3"/></svg>',
   code:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
@@ -131,26 +162,47 @@ const params = new URLSearchParams(location.search);
 let n = parseInt(params.get("t"), 10);
 if (!n || n < 1 || n > 15) n = 1;
 
-// Parse one topic subfile
+// Parse a topic subfile (title, unit, description, notes, videos, assignment)
 function parseTopic(md) {
   const lines = md.split(/\r?\n/);
   let name = "", unit = "", mode = null, inCode = false, inComment = false;
-  const notes = [], videos = [];
+  const notes = [], videos = [], descLines = [];
   let assignment = { deadline: "TBA", url: "#" };
+  const isBoundary = (h) => {
+    const t = h.trim().toLowerCase();
+    return t.startsWith("note") || t.startsWith("video") || t.startsWith("assign");
+  };
   for (const raw of lines) {
-    const line = raw.trim();
-    if (line.startsWith("<!--")) inComment = true;
-    if (inComment) { if (line.includes("-->")) inComment = false; continue; }
-    if (line.startsWith("```")) { inCode = !inCode; continue; }
-    if (inCode) continue;
-    if (line.startsWith("# ")) { name = line.slice(2).trim(); continue; }
-    if (line.startsWith("## ")) {
-      const h = line.slice(3).toLowerCase();
-      mode = h.startsWith("note") ? "notes" : h.startsWith("video") ? "videos" : h.startsWith("assign") ? "assignment" : null;
+    const trimmed = raw.trim();
+
+    // Comments only matter outside the description
+    if (mode !== "description") {
+      if (trimmed.startsWith("<!--")) inComment = true;
+      if (inComment) { if (trimmed.includes("-->")) inComment = false; continue; }
+    }
+
+    // Code fences
+    if (trimmed.startsWith("```")) {
+      if (mode === "description") descLines.push(raw);
+      inCode = !inCode; continue;
+    }
+    if (inCode) { if (mode === "description") descLines.push(raw); continue; }
+
+    // Title
+    if (trimmed.startsWith("# ") && !name) { name = trimmed.slice(2).trim(); continue; }
+
+    // Section headers
+    if (trimmed.startsWith("## ")) {
+      const h = trimmed.slice(3).trim(), hl = h.toLowerCase();
+      if (hl.startsWith("description")) { mode = "description"; continue; }
+      if (isBoundary(h)) { mode = hl.startsWith("note") ? "notes" : hl.startsWith("assign") ? "assignment" : "videos"; continue; }
+      if (mode === "description") { descLines.push(raw); continue; }
       continue;
     }
-    if (line.startsWith("- ") && mode) {
-      const item = line.slice(2);
+
+    // List items in structured sections
+    if (trimmed.startsWith("- ") && (mode === "notes" || mode === "videos" || mode === "assignment")) {
+      const item = trimmed.slice(2);
       const i = item.lastIndexOf("|");
       const label = (i >= 0 ? item.slice(0, i) : item).trim();
       const url = (i >= 0 ? item.slice(i + 1) : "#").trim() || "#";
@@ -158,9 +210,31 @@ function parseTopic(md) {
       else (mode === "notes" ? notes : videos).push({ label, url });
       continue;
     }
-    if (line && !mode && !unit && !line.startsWith("#")) unit = line;
+
+    // Description body
+    if (mode === "description") { descLines.push(raw); continue; }
+
+    // Unit line
+    if (trimmed && !mode && !unit && !trimmed.startsWith("#")) unit = trimmed;
   }
-  return { name, unit, notes, videos, assignment };
+  return { name, unit, description: descLines.join("\n").trim(), notes, videos, assignment };
+}
+
+// Minimal fallback if the markdown library fails to load
+function escapeHtml(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function basicMarkdown(md){
+  const parts = md.split("```"); let html = "";
+  parts.forEach((p, i) => {
+    if (i % 2 === 1) { const nl = p.indexOf("\n"); const code = nl >= 0 ? p.slice(nl + 1) : p; html += "<pre><code>" + escapeHtml(code) + "</code></pre>"; }
+    else { p.split(/\n{2,}/).forEach(par => { const t = par.trim(); if (!t) return;
+      if (/^#{1,4}\s/.test(t)) { const lvl = t.match(/^#+/)[0].length; html += "<h" + lvl + ">" + escapeHtml(t.replace(/^#+\s/, "")) + "</h" + lvl + ">"; }
+      else html += "<p>" + escapeHtml(t).replace(/\n/g, "<br>") + "</p>"; }); }
+  });
+  return html;
+}
+function renderMarkdown(md){
+  if (window.marked && typeof window.marked.parse === "function") return window.marked.parse(md);
+  return basicMarkdown(md);
 }
 
 function linkList(items, cls) {
@@ -170,9 +244,19 @@ function linkList(items, cls) {
       <span class="lbl">${x.label}</span><span class="arw">↗</span>
     </a>`).join("");
 }
-function compilerList() {
-  return '<div class="code-links">' + COMPILERS.map(c => `
-    <a href="${c.url}" target="_blank" rel="noopener"><span>${c.label}</span><span class="tag">${c.tag}</span></a>`).join("") + '</div>';
+function notesCard(t){ return `<div class="res notes"><div class="res-head"><span class="res-ic">${IC.notes}</span> Notes</div>${linkList(t.notes,"notes")}</div>`; }
+function videosCard(t){ return `<div class="res videos"><div class="res-head"><span class="res-ic">${IC.videos}</span> Video Lectures</div>${linkList(t.videos,"videos")}</div>`; }
+function codeCard(){
+  return `<div class="res code"><div class="res-head"><span class="res-ic">${IC.code}</span> Run Your Code</div><div class="code-links">` +
+    COMPILERS.map(c => `<a href="${c.url}" target="_blank" rel="noopener"><span>${c.label}</span><span class="tag">${c.tag}</span></a>`).join("") +
+    `</div></div>`;
+}
+function assignCard(t){
+  return `<div class="res assign"><div class="res-head"><span class="res-ic">${IC.assign}</span> Assignment</div>
+    <div class="assign-box">
+      <span class="deadline">${IC.clock} Deadline: ${t.assignment.deadline}</span>
+      <a class="assign-btn" href="${t.assignment.url}" ${t.assignment.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>Open assignment ↗</a>
+    </div></div>`;
 }
 
 function render(t) {
@@ -181,27 +265,23 @@ function render(t) {
   document.getElementById("big-num").textContent = n;
   document.getElementById("topic-name").textContent = t.name || `Topic ${n}`;
   document.getElementById("topic-unit").textContent = t.unit || "";
+
+  const hasDesc = t.description && t.description.length > 0;
+  // Right column order: Notes → Run Your Code → Video Lectures → Assignment
+  const resStack = notesCard(t) + codeCard() + videosCard(t) + assignCard(t);
+
+  const descCol = hasDesc ? `
+    <div class="col-desc">
+      <div class="desc-card">
+        <div class="desc-head"><span class="res-ic">${IC.desc}</span> Description</div>
+        <div class="desc-body">${renderMarkdown(t.description)}</div>
+      </div>
+    </div>` : "";
+
   document.getElementById("content").innerHTML = `
-    <div class="res-grid">
-      <div class="res notes">
-        <div class="res-head"><span class="res-ic">${IC.notes}</span> Notes</div>
-        ${linkList(t.notes, "notes")}
-      </div>
-      <div class="res videos">
-        <div class="res-head"><span class="res-ic">${IC.videos}</span> Video Lectures</div>
-        ${linkList(t.videos, "videos")}
-      </div>
-      <div class="res code">
-        <div class="res-head"><span class="res-ic">${IC.code}</span> Run Your Code</div>
-        ${compilerList()}
-      </div>
-      <div class="res assign">
-        <div class="res-head"><span class="res-ic">${IC.assign}</span> Assignment</div>
-        <div class="assign-box">
-          <span class="deadline">${IC.clock} Deadline: ${t.assignment.deadline}</span>
-          <a class="assign-btn" href="${t.assignment.url}" ${t.assignment.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>Open assignment ↗</a>
-        </div>
-      </div>
+    <div class="layout ${hasDesc ? "has-desc" : "no-desc"}">
+      ${descCol}
+      <div class="col-res">${resStack}</div>
     </div>`;
 }
 
