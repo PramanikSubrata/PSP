@@ -116,7 +116,7 @@ Unit 3
 
 ---
 
-## How to publish (for Sir / TA)
+## How to publish 
 
 1. On GitHub, click the file you want, then the pencil (**Edit**) icon.
 2. Make your change.
