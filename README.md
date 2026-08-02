@@ -31,7 +31,7 @@
 
 ---
 
-## How to edit (for Sir / TA)
+## How to edit 
 
 **To change what a chapter contains** → open its file, e.g. `topics/1-1.md`:
 
@@ -80,4 +80,4 @@ Just paste your real link **inside the quotes** `""`. Add or remove lines freely
 
 ---
 
-_Maintained by SUBRATA (IIITA)._
+_Maintained by Teaching Assistant Team (IIITA)._
