@@ -20,7 +20,7 @@ You almost never touch `index.html` or `topic.html`.
 
 ---
 
-## How to edit a topic (for Sir / TA)
+## How to edit a topic 
 
 1. Open the folder **`topics`** on GitHub.
 2. Click the topic you want, e.g. **`11.md`** for *Pointers*.
