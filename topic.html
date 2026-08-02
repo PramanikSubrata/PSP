@@ -346,13 +346,13 @@ document.getElementById("foot-year").textContent = new Date().getFullYear();
 
 async function load() {
   try {
-    const res = await fetch(`topics/${n}.md`, { cache: "no-store" });
+    const res = await fetch(`${n}.md`, { cache: "no-store" });
     if (!res.ok) throw 0;
     render(parseTopic(await res.text()));
   } catch (e) {
     document.getElementById("topic-name").textContent = `Topic ${n}`;
     document.getElementById("content").innerHTML =
-      `<div class="state"><h2>Content not found</h2><p>The file <code>topics/${n}.md</code> could not be loaded yet.</p></div>`;
+      `<div class="state"><h2>Content not found</h2><p>The file <code>${n}.md</code> could not be loaded yet.</p></div>`;
   }
 }
 load();
