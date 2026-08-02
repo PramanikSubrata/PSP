@@ -58,6 +58,7 @@
   .res.videos { border-top:3px solid var(--videos); } .res.videos .res-ic { background:var(--videos-bg); }
   .res.code { border-top:3px solid var(--code); } .res.code .res-ic { background:var(--code-bg); }
   .res.assign { border-top:3px solid var(--assign); } .res.assign .res-ic { background:var(--assign-bg); }
+  .res.tutorial { border-top:3px solid #0d9488; } .res.tutorial .res-ic { background:#e6faf5; }
 
   .link-row { display:flex; align-items:center; gap:9px; padding:10px 12px; border-radius:9px; font-size:14px; font-weight:500; transition:.15s; margin-bottom:7px; background:#faf9ff; border:1px solid transparent; }
   .link-row:last-child { margin-bottom:0; }
@@ -66,6 +67,7 @@
   .link-row.notes:hover { background:var(--notes-bg); border-color:#d7e6ff; transform:translateX(3px); }
   .link-row.videos:hover { background:var(--videos-bg); border-color:#f7d6e8; transform:translateX(3px); }
   .link-row.assign:hover { background:var(--assign-bg); border-color:#fde3c0; transform:translateX(3px); }
+  .link-row.tutorial:hover { background:#e6faf5; border-color:#bdeee2; transform:translateX(3px); }
   .empty { color:var(--muted); font-size:13.5px; font-style:italic; padding:6px 2px; }
 
   .code-links a { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 13px; border-radius:10px; margin-bottom:8px; font-weight:600; font-size:14px; color:#065f46; background:var(--code-bg); border:1px solid #cdeee0; transition:.15s; }
@@ -164,7 +166,8 @@ const IC = {
   code:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
   assign: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
   clock:  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-  book:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
+  book:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  tutorial:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.5 2 6 2s6-1 6-2v-5"/></svg>'
 };
 
 // Read ?t=N  (N can be a number like 1, or a sub-file id like 1-1)
@@ -176,10 +179,10 @@ if (!/^[A-Za-z0-9._-]+$/.test(n)) n = "1";
 function parseTopic(md) {
   const lines = md.split(/\r?\n/);
   let name = "", unit = "", mode = null, inCode = false, inComment = false;
-  const notes = [], videos = [], descLines = [], assignment = [], chapters = [];
+  const notes = [], videos = [], descLines = [], assignment = [], chapters = [], tutorials = [];
   const isBoundary = (h) => {
     const t = h.trim().toLowerCase();
-    return t.startsWith("note") || t.startsWith("video") || t.startsWith("assign") || t.startsWith("chapter");
+    return t.startsWith("note") || t.startsWith("video") || t.startsWith("lecture") || t.startsWith("tutorial") || t.startsWith("assign") || t.startsWith("chapter");
   };
   for (const raw of lines) {
     const trimmed = raw.trim();
@@ -202,13 +205,21 @@ function parseTopic(md) {
     if (trimmed.startsWith("## ")) {
       const h = trimmed.slice(3).trim(), hl = h.toLowerCase();
       if (hl.startsWith("description")) { mode = "description"; continue; }
-      if (isBoundary(h)) { mode = hl.startsWith("note") ? "notes" : hl.startsWith("assign") ? "assignment" : hl.startsWith("chapter") ? "chapters" : "videos"; continue; }
+      if (isBoundary(h)) {
+        mode = hl.startsWith("note") ? "notes"
+             : hl.startsWith("assign") ? "assignment"
+             : hl.startsWith("chapter") ? "chapters"
+             : hl.startsWith("tutorial") ? "tutorials"
+             : (hl.startsWith("video") || hl.startsWith("lecture")) ? "videos"
+             : "videos";
+        continue;
+      }
       if (mode === "description") { descLines.push(raw); continue; }
       continue;
     }
 
     // List items in structured sections
-    if (trimmed.startsWith("- ") && (mode === "notes" || mode === "videos" || mode === "assignment" || mode === "chapters")) {
+    if (trimmed.startsWith("- ") && (mode === "notes" || mode === "videos" || mode === "assignment" || mode === "chapters" || mode === "tutorials")) {
       const item = trimmed.slice(2);
       const i = item.lastIndexOf("|");
       const label = (i >= 0 ? item.slice(0, i) : item).trim();
@@ -216,6 +227,7 @@ function parseTopic(md) {
       url = url.replace(/^["'`]+|["'`]+$/g, "").trim() || "#";
       if (mode === "assignment") assignment.push({ label: label || "TBA", url });
       else if (mode === "chapters") chapters.push({ label: label || url, id: url });
+      else if (mode === "tutorials") tutorials.push({ label, url });
       else (mode === "notes" ? notes : videos).push({ label, url });
       continue;
     }
@@ -226,7 +238,7 @@ function parseTopic(md) {
     // Unit line
     if (trimmed && !mode && !unit && !trimmed.startsWith("#")) unit = trimmed;
   }
-  return { name, unit, description: descLines.join("\n").trim(), notes, videos, assignment, chapters };
+  return { name, unit, description: descLines.join("\n").trim(), notes, videos, tutorials, assignment, chapters };
 }
 
 // Minimal fallback if the markdown library fails to load
@@ -254,7 +266,8 @@ function linkList(items, cls) {
     </a>`).join("");
 }
 function notesCard(t){ return `<div class="res notes"><div class="res-head"><span class="res-ic">${IC.notes}</span> Notes</div>${linkList(t.notes,"notes")}</div>`; }
-function videosCard(t){ return `<div class="res videos"><div class="res-head"><span class="res-ic">${IC.videos}</span> Video Lectures</div>${linkList(t.videos,"videos")}</div>`; }
+function videosCard(t){ return `<div class="res videos"><div class="res-head"><span class="res-ic">${IC.videos}</span> Lecture</div>${linkList(t.videos,"videos")}</div>`; }
+function tutorialCard(t){ return `<div class="res tutorial"><div class="res-head"><span class="res-ic">${IC.tutorial}</span> Tutorial</div>${linkList(t.tutorials,"tutorial")}</div>`; }
 function codeCard(){
   return `<div class="res code"><div class="res-head"><span class="res-ic">${IC.code}</span> Run Your Code</div><div class="code-links">` +
     COMPILERS.map(c => `<a href="${c.url}" target="_blank" rel="noopener"><span>${c.label}</span><span class="tag">${c.tag}</span></a>`).join("") +
@@ -304,7 +317,7 @@ function render(t) {
     document.getElementById("content").innerHTML = descCardFull + chaptersCard(t);
   } else {
     // CONTENT PAGE: description on the left, resources on the right
-    const resStack = notesCard(t) + codeCard() + videosCard(t) + assignCard(t);
+    const resStack = notesCard(t) + videosCard(t) + tutorialCard(t) + codeCard() + assignCard(t);
     const descCol = hasDesc ? `<div class="col-desc">${descCardFull}</div>` : "";
     document.getElementById("content").innerHTML = `
       <div class="layout ${hasDesc ? "has-desc" : "no-desc"}">
