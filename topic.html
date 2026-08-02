@@ -99,6 +99,14 @@
   .desc-body th,.desc-body td { border:1px solid var(--line); padding:8px 10px; font-size:14px; text-align:left; }
   .desc-body hr { border:none; border-top:1px solid var(--line); margin:16px 0; }
 
+  .chapters-card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:0 4px 16px -12px rgba(45,27,105,.2); border-top:3px solid var(--brand); margin-bottom:22px; }
+  .chapter-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  @media (max-width:640px){ .chapter-grid { grid-template-columns:1fr; } }
+  .chapter-row { display:flex; align-items:center; gap:9px; padding:12px 14px; border-radius:10px; font-size:14.5px; font-weight:600; color:var(--ink); background:#f7f5ff; border:1px solid #ece7fb; transition:.15s; }
+  .chapter-row:hover { background:#efe9fe; border-color:#d9d2f7; transform:translateX(3px); }
+  .chapter-row .lbl { flex:1; }
+  .chapter-row .arw { color:var(--brand); }
+
   .state { text-align:center; padding:60px 20px; color:var(--muted); }
   .state h2 { font-family:var(--font-display); color:var(--ink); margin-bottom:8px; }
 
@@ -155,22 +163,23 @@ const IC = {
   videos: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="10 8 16 12 10 16 10 8"/><rect x="2" y="4" width="20" height="16" rx="3"/></svg>',
   code:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
   assign: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
-  clock:  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
+  clock:  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#92400e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  book:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>'
 };
 
-// Read ?t=N
+// Read ?t=N  (N can be a number like 1, or a sub-file id like 1-1)
 const params = new URLSearchParams(location.search);
-let n = parseInt(params.get("t"), 10);
-if (!n || n < 1 || n > 15) n = 1;
+let n = (params.get("t") || "1").trim();
+if (!/^[A-Za-z0-9._-]+$/.test(n)) n = "1";
 
 // Parse a topic subfile (title, unit, description, notes, videos, assignment)
 function parseTopic(md) {
   const lines = md.split(/\r?\n/);
   let name = "", unit = "", mode = null, inCode = false, inComment = false;
-  const notes = [], videos = [], descLines = [], assignment = [];
+  const notes = [], videos = [], descLines = [], assignment = [], chapters = [];
   const isBoundary = (h) => {
     const t = h.trim().toLowerCase();
-    return t.startsWith("note") || t.startsWith("video") || t.startsWith("assign");
+    return t.startsWith("note") || t.startsWith("video") || t.startsWith("assign") || t.startsWith("chapter");
   };
   for (const raw of lines) {
     const trimmed = raw.trim();
@@ -193,19 +202,20 @@ function parseTopic(md) {
     if (trimmed.startsWith("## ")) {
       const h = trimmed.slice(3).trim(), hl = h.toLowerCase();
       if (hl.startsWith("description")) { mode = "description"; continue; }
-      if (isBoundary(h)) { mode = hl.startsWith("note") ? "notes" : hl.startsWith("assign") ? "assignment" : "videos"; continue; }
+      if (isBoundary(h)) { mode = hl.startsWith("note") ? "notes" : hl.startsWith("assign") ? "assignment" : hl.startsWith("chapter") ? "chapters" : "videos"; continue; }
       if (mode === "description") { descLines.push(raw); continue; }
       continue;
     }
 
     // List items in structured sections
-    if (trimmed.startsWith("- ") && (mode === "notes" || mode === "videos" || mode === "assignment")) {
+    if (trimmed.startsWith("- ") && (mode === "notes" || mode === "videos" || mode === "assignment" || mode === "chapters")) {
       const item = trimmed.slice(2);
       const i = item.lastIndexOf("|");
       const label = (i >= 0 ? item.slice(0, i) : item).trim();
       let url = (i >= 0 ? item.slice(i + 1) : "#").trim();
       url = url.replace(/^["'`]+|["'`]+$/g, "").trim() || "#";
       if (mode === "assignment") assignment.push({ label: label || "TBA", url });
+      else if (mode === "chapters") chapters.push({ label: label || url, id: url });
       else (mode === "notes" ? notes : videos).push({ label, url });
       continue;
     }
@@ -216,7 +226,7 @@ function parseTopic(md) {
     // Unit line
     if (trimmed && !mode && !unit && !trimmed.startsWith("#")) unit = trimmed;
   }
-  return { name, unit, description: descLines.join("\n").trim(), notes, videos, assignment };
+  return { name, unit, description: descLines.join("\n").trim(), notes, videos, assignment, chapters };
 }
 
 // Minimal fallback if the markdown library fails to load
@@ -260,32 +270,64 @@ function assignList(items){
 function assignCard(t){
   return `<div class="res assign"><div class="res-head"><span class="res-ic">${IC.assign}</span> Assignment</div>${assignList(t.assignment)}</div>`;
 }
+function chaptersCard(t){
+  if(!t.chapters || !t.chapters.length) return "";
+  const rows = t.chapters.map(c => `
+    <a class="chapter-row" href="topic.html?t=${encodeURIComponent(c.id)}">
+      <span class="lbl">${c.label}</span><span class="arw">→</span>
+    </a>`).join("");
+  return `<div class="chapters-card">
+    <div class="res-head"><span class="res-ic" style="background:#f0ecfe">${IC.book}</span> Chapters in this topic</div>
+    <div class="chapter-grid">${rows}</div>
+  </div>`;
+}
 
 function render(t) {
-  document.title = `${n}. ${t.name} · PSP`;
-  document.getElementById("crumb").textContent = `// PSP · Topic ${n} of 15`;
-  document.getElementById("big-num").textContent = n;
-  document.getElementById("topic-name").textContent = t.name || `Topic ${n}`;
+  const disp = n.replace(/-/g, ".");
+  document.title = `${disp}. ${t.name} · PSP`;
+  document.getElementById("crumb").textContent = `// PSP · Topic ${disp}`;
+  document.getElementById("big-num").textContent = disp;
+  document.getElementById("topic-name").textContent = t.name || `Topic ${disp}`;
   document.getElementById("topic-unit").textContent = t.unit || "";
 
   const hasDesc = t.description && t.description.length > 0;
-  // Right column order: Notes → Run Your Code → Video Lectures → Assignment
-  const resStack = notesCard(t) + codeCard() + videosCard(t) + assignCard(t);
+  const hasChapters = t.chapters && t.chapters.length > 0;
 
-  const descCol = hasDesc ? `
-    <div class="col-desc">
-      <div class="desc-card">
-        <div class="desc-head"><span class="res-ic">${IC.desc}</span> Description</div>
-        <div class="desc-body">${renderMarkdown(t.description)}</div>
-      </div>
+  const descCardFull = hasDesc ? `
+    <div class="desc-card" style="margin-bottom:22px">
+      <div class="desc-head"><span class="res-ic">${IC.desc}</span> Description</div>
+      <div class="desc-body">${renderMarkdown(t.description)}</div>
     </div>` : "";
 
-  document.getElementById("content").innerHTML = `
-    <div class="layout ${hasDesc ? "has-desc" : "no-desc"}">
-      ${descCol}
-      <div class="col-res">${resStack}</div>
-    </div>`;
+  if (hasChapters) {
+    // HUB PAGE: optional description + the list of chapters (no resource cards)
+    document.getElementById("content").innerHTML = descCardFull + chaptersCard(t);
+  } else {
+    // CONTENT PAGE: description on the left, resources on the right
+    const resStack = notesCard(t) + codeCard() + videosCard(t) + assignCard(t);
+    const descCol = hasDesc ? `<div class="col-desc">${descCardFull}</div>` : "";
+    document.getElementById("content").innerHTML = `
+      <div class="layout ${hasDesc ? "has-desc" : "no-desc"}">
+        ${descCol}
+        <div class="col-res">${resStack}</div>
+      </div>`;
+  }
 }
+
+// Back link: sub-pages go back to their parent, top pages go to All Topics
+function setBackLink() {
+  const back = document.querySelector(".back-link");
+  if (!back) return;
+  if (n.includes("-")) {
+    const parent = n.substring(0, n.lastIndexOf("-"));
+    back.href = "topic.html?t=" + encodeURIComponent(parent);
+    back.textContent = "← Back";
+  } else {
+    back.href = "index.html#topics";
+    back.textContent = "← All Topics";
+  }
+}
+setBackLink();
 
 async function load() {
   try {
