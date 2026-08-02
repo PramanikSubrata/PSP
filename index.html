@@ -384,6 +384,26 @@
   .editor { animation: floaty 6s ease-in-out infinite; }
   @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
+  /* ---------- PYQ ---------- */
+  #pyq { background: linear-gradient(180deg, #f2f0fb, #f8f8fd); border-top: 1px solid var(--line); }
+  .session-pill { display:inline-flex; align-items:center; gap:6px; font-size:13px; background:#efe9fe; color:var(--brand); border:1px solid #ddd3fb; padding:4px 12px; border-radius:999px; margin-left:6px; font-family:var(--font-mono); }
+  .pyq-card { margin-top:26px; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; box-shadow:var(--shadow); }
+  .pyq-table { width:100%; border-collapse:collapse; }
+  .pyq-table th { text-align:left; background:#faf9ff; font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); padding:13px 18px; border-bottom:1px solid var(--line); }
+  .pyq-table td { padding:15px 18px; font-size:15px; border-bottom:1px solid var(--line); }
+  .pyq-table tr:last-child td { border-bottom:none; }
+  .pyq-table tbody tr:hover td { background:#faf9ff; }
+  .pyq-table td:first-child { font-family:var(--font-display); font-weight:700; font-size:17px; color:var(--ink); }
+  .pyq-type { display:inline-block; font-size:12.5px; font-weight:600; padding:5px 12px; border-radius:999px; font-family:var(--font-mono); }
+  .pyq-type.mid { background:var(--notes-bg); color:var(--notes); }
+  .pyq-type.end { background:#fff1f2; color:#e11d48; }
+  .pyq-link { display:inline-flex; align-items:center; gap:6px; font-weight:600; color:var(--brand); font-size:14px; }
+  .pyq-link:hover { text-decoration:underline; }
+
+  /* ---------- Footer polish ---------- */
+  .foot-brand { font-family:var(--font-display); font-weight:700; font-size:20px; letter-spacing:-.01em; }
+  .foot-psp { background:linear-gradient(100deg,#a78bfa,#22d3ee); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; scroll-behavior: auto; animation: none !important; }
     .reveal { opacity: 1 !important; transform: none !important; }
@@ -403,6 +423,7 @@
       <a href="#about">Course Info</a>
       <a href="#team">Teaching Assistant Team</a>
       <a href="#topics">Topics</a>
+      <a href="#pyq">PYQ</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
@@ -477,7 +498,7 @@
   <div class="wrap">
     <div class="sec-eyebrow">03 · Learn & Practice</div>
     <h2 class="sec-title">Topics</h2>
-    <p class="sec-sub">Click any topic to open its notes, video lectures, live compilers, and assignment.</p>
+    <p class="sec-sub">Click any topic to open its notes, lectures, tutorials, live compilers, and assignments.</p>
 
     <div class="topic-tools">
       <div class="search">
@@ -491,10 +512,20 @@
   </div>
 </section>
 
+<!-- ===== PYQ ===== -->
+<section id="pyq">
+  <div class="wrap">
+    <div class="sec-eyebrow">04 · Exams</div>
+    <h2 class="sec-title">Previous Year Questions (PYQ)</h2>
+    <p class="sec-sub">Past question papers, organized by year and exam type. <span class="session-pill">Session: <b id="acad-session">—</b></span></p>
+    <div id="pyq-wrap"><!-- injected by JS --></div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <div style="font-family:var(--font-display);font-weight:600;font-size:16px;">Problem Solving with Programming (PSP)</div>
-    <div class="fnote">Maintained by Teaching Assistant Team (IIITA) · Bookmark this page ⭐</div>
+    <div class="foot-brand">Problem Solving with Programming <span class="foot-psp">(PSP)</span></div>
+    <div class="fnote">© <span id="foot-year">2026</span> PSP · Maintained by Teaching Assistant Team (IIITA) · Bookmark this page ⭐</div>
   </div>
 </footer>
 
@@ -580,6 +611,16 @@ const TOPICS = [
   { name: "Sorting and Searching",                   unit: "Applications" }
 ];
 
+/* --- PYQ (Previous Year Questions) — EDIT THIS LIST ---
+   Each entry:  { year: "2025", type: "Mid Sem", url: "paste-link" }
+   type can be "Mid Sem", "End Sem", "Quiz", etc.  url "#" if not ready.  */
+const PYQ = [
+  { year: "2025", type: "End Sem", url: "#" },
+  { year: "2025", type: "Mid Sem", url: "#" },
+  { year: "2024", type: "End Sem", url: "#" },
+  { year: "2024", type: "Mid Sem", url: "#" }
+];
+
 /* ============================================================
    ⚙️  BELOW THIS LINE: rendering logic — no need to touch.
    ============================================================ */
@@ -637,6 +678,27 @@ function renderTopics(filter = "") {
     </a>`).join("");
 }
 renderTopics();
+
+// Build PYQ table
+const pyqWrap = document.getElementById("pyq-wrap");
+if (PYQ.length) {
+  pyqWrap.innerHTML = `<div class="pyq-card"><table class="pyq-table">
+    <thead><tr><th>Year</th><th>Exam Type</th><th>Question Paper</th></tr></thead>
+    <tbody>${PYQ.map(p => `
+      <tr>
+        <td>${p.year}</td>
+        <td><span class="pyq-type ${/end/i.test(p.type) ? "end" : "mid"}">${p.type}</span></td>
+        <td><a class="pyq-link" href="${p.url}" ${p.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>View paper →</a></td>
+      </tr>`).join("")}</tbody>
+  </table></div>`;
+} else {
+  pyqWrap.innerHTML = `<p class="sec-sub" style="margin-top:20px">Question papers will be added soon.</p>`;
+}
+
+// Auto academic session + footer year
+const YY = new Date().getFullYear();
+document.getElementById("acad-session").textContent = YY + "–" + (YY + 1);
+document.getElementById("foot-year").textContent = YY;
 
 // Search
 document.getElementById("search").addEventListener("input", e => renderTopics(e.target.value));
