@@ -12,7 +12,6 @@
     --ink:#16132e; --muted:#6a6a86; --bg:#f8f8fd; --card:#fff; --line:#e8e6f4;
     --brand:#6d28d9; --brand-2:#06b6d4;
     --notes:#2563eb; --notes-bg:#eff5ff;
-    --videos:#db2777; --videos-bg:#fdf0f7;
     --code:#059669; --code-bg:#ecfaf4;
     --assign:#d97706; --assign-bg:#fff6ea;
     --radius:16px; --shadow:0 10px 30px -12px rgba(45,27,105,.18);
@@ -20,7 +19,6 @@
     --font-body:"Inter",sans-serif;
     --font-mono:"JetBrains Mono",monospace;
   }
-
   * { box-sizing:border-box; margin:0; padding:0; }
   html { scroll-behavior:smooth; }
   body { font-family:var(--font-body); color:var(--ink); background:var(--bg); line-height:1.6; -webkit-font-smoothing:antialiased; }
@@ -28,43 +26,32 @@
   .wrap { max-width:1080px; margin:0 auto; padding:0 22px; }
   :focus-visible { outline:2px solid var(--brand); outline-offset:3px; border-radius:6px; }
 
-  /* ---------- Nav ---------- */
+  /* Nav */
   .nav { position:sticky; top:0; z-index:50; background:rgba(248,248,253,.86); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
   .nav-inner { display:flex; align-items:center; justify-content:space-between; gap:14px; height:62px; }
   .brand-mark { display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; font-size:18px; flex:none; }
   .brand-badge { width:34px; height:34px; border-radius:9px; display:grid; place-items:center; background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#fff; font-family:var(--font-mono); font-weight:600; font-size:15px; box-shadow:0 6px 16px -6px rgba(109,40,217,.6); }
   .brand-word { font-family:var(--font-display); font-weight:700; letter-spacing:.06em; background:linear-gradient(100deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-
   .nav-links { display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; }
   .nav-links::-webkit-scrollbar { display:none; }
   .nav-links a { font-size:13.5px; font-weight:500; color:var(--muted); padding:8px 10px; border-radius:9px; white-space:nowrap; transition:.18s; }
   .nav-links a:hover { color:var(--brand); background:#f0ecfe; }
-
   .hamburger { display:none; background:none; border:none; cursor:pointer; padding:6px; color:var(--ink); border-radius:9px; }
   .hamburger:hover { background:#f0ecfe; }
-
   @media (max-width:1000px) {
     .hamburger { display:block; }
-    .nav-links {
-      position:absolute; top:100%; left:0; right:0;
-      flex-direction:column; gap:4px; overflow:visible;
-      background:rgba(248,248,253,.98); backdrop-filter:blur(14px);
-      border-bottom:1px solid var(--line);
-      box-shadow:0 24px 34px -22px rgba(45,27,105,.35);
-      padding:10px 16px 16px; display:none; max-height:75vh; overflow-y:auto;
-    }
+    .nav-links { position:absolute; top:100%; left:0; right:0; flex-direction:column; gap:4px;
+      background:rgba(248,248,253,.98); backdrop-filter:blur(14px); border-bottom:1px solid var(--line);
+      box-shadow:0 24px 34px -22px rgba(45,27,105,.35); padding:10px 16px 16px; display:none; max-height:75vh; overflow-y:auto; }
     .nav-links.open { display:flex; }
     .nav-links a { text-align:center; padding:13px; font-size:15.5px; border-radius:11px; }
   }
 
-  /* ---------- Hero ---------- */
-  .hero {
-    background:
+  /* Hero */
+  .hero { background:
       radial-gradient(900px 400px at 85% -10%, rgba(109,40,217,.35), transparent 60%),
-      radial-gradient(700px 400px at 0% 120%, rgba(6,182,212,.25), transparent 55%),
-      #12102c;
-    color:#fff; padding:64px 0 72px; overflow:hidden;
-  }
+      radial-gradient(700px 400px at 0% 120%, rgba(6,182,212,.25), transparent 55%), #12102c;
+    color:#fff; padding:64px 0 72px; overflow:hidden; }
   .hero-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:44px; align-items:center; }
   @media (max-width:860px){ .hero-grid { grid-template-columns:1fr; gap:34px; } }
   .eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:12.5px; letter-spacing:.04em; color:#c9b8ff; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); padding:6px 12px; border-radius:999px; margin-bottom:20px; }
@@ -82,7 +69,6 @@
   .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 26px -10px rgba(124,58,237,.7); }
   .btn-ghost { background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(255,255,255,.2); }
   .btn-ghost:hover { background:rgba(255,255,255,.16); }
-
   .editor { background:#0c0a1f; border:1px solid rgba(255,255,255,.1); border-radius:14px; box-shadow:0 30px 60px -20px rgba(0,0,0,.6); overflow:hidden; font-family:var(--font-mono); font-size:14px; animation:floaty 6s ease-in-out infinite; }
   .editor-bar { display:flex; align-items:center; gap:8px; padding:12px 15px; background:#17142f; border-bottom:1px solid rgba(255,255,255,.07); }
   .dot { width:11px; height:11px; border-radius:50%; }
@@ -94,8 +80,9 @@
   .kw{color:#c792ea;} .fn{color:#82aaff;} .str{color:#c3e88d;} .cm{color:#676992;font-style:italic;} .pp{color:#f78c6c;}
   @keyframes floaty { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
 
-  /* ---------- Section shell ---------- */
+  /* Section shell */
   section { padding:66px 0; }
+  section[hidden] { display:none; }
   .sec-eyebrow { font-family:var(--font-mono); font-size:13px; color:var(--brand); font-weight:600; letter-spacing:.05em; text-transform:uppercase; }
   .sec-title { font-family:var(--font-display); font-weight:700; font-size:clamp(25px,4vw,34px); letter-spacing:-.02em; margin:8px 0 6px; }
   .sec-sub { color:var(--muted); max-width:62ch; }
@@ -103,7 +90,7 @@
   .band-b { background:linear-gradient(180deg,#f8f8fd,#f2f0fb); }
   .band-c { background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
 
-  /* ---------- Objectives / Outcomes ---------- */
+  /* Objectives / Outcomes */
   .goal-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-top:28px; }
   .goal { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; gap:14px; align-items:flex-start; transition:.18s; box-shadow:0 4px 16px -12px rgba(45,27,105,.25); }
   .goal:hover { transform:translateY(-3px); box-shadow:var(--shadow); border-color:#d9d2f7; }
@@ -114,16 +101,14 @@
   .goal.out .goal-no { background:linear-gradient(135deg,#059669,#10b981); }
   .goal p { font-size:14.5px; color:#3a3752; }
 
-  /* ---------- Course info ---------- */
+  /* Course info */
   .desc-card { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:22px 24px; box-shadow:var(--shadow); margin:26px 0 22px; border-left:5px solid var(--brand); }
   .desc-card p { font-size:16px; }
-
   .fact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-bottom:26px; }
   .fact { background:var(--card); border:1px solid var(--line); border-radius:13px; padding:15px 17px; }
   .fact .k { font-family:var(--font-mono); font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); }
   .fact .v { font-family:var(--font-display); font-weight:600; font-size:15.5px; margin-top:4px; }
-  .fact .v a { color:var(--brand); text-decoration:underline; word-break:break-all; }
-
+  .fact .v a { color:var(--brand); text-decoration:underline; word-break:break-all; font-weight:500; font-size:13px; font-family:var(--font-mono); }
   .sub-h { font-family:var(--font-display); font-weight:600; font-size:18px; margin:0 0 14px; }
   .units { display:grid; gap:12px; }
   .unit { background:var(--card); border:1px solid var(--line); border-radius:13px; overflow:hidden; }
@@ -136,11 +121,10 @@
   .unit ul li { margin:7px 0; font-size:14.5px; }
   .unit ul li::marker { color:var(--brand); }
   @media (min-width:620px){ .unit ul { padding-left:62px; } }
-
-  .prereq { display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+  .prereq { display:flex; flex-wrap:wrap; gap:10px; margin:6px 0 28px; }
   .prereq span { font-size:13.5px; background:var(--code-bg); color:#065f46; border:1px solid #cdeee0; padding:7px 13px; border-radius:999px; font-weight:500; }
 
-  /* ---------- Topics ---------- */
+  /* Topics */
   .topic-tools { display:flex; align-items:center; gap:12px; margin:26px 0 22px; flex-wrap:wrap; }
   .search { flex:1; min-width:220px; position:relative; }
   .search input { width:100%; padding:13px 16px 13px 42px; font-family:var(--font-body); font-size:15px; border:1px solid var(--line); border-radius:12px; background:#fff; color:var(--ink); transition:.18s; }
@@ -159,7 +143,7 @@
   .topic-link:hover .t-arrow { transform:translateX(4px); }
   @media (max-width:520px){ .t-open .t-lbl { display:none; } }
 
-  /* ---------- Applications ---------- */
+  /* Applications */
   .app-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:14px; margin-top:28px; }
   .app { background:var(--card); border:1px solid var(--line); border-top:3px solid var(--code); border-radius:14px; padding:17px 18px; display:flex; flex-direction:column; gap:10px; transition:.18s; box-shadow:0 4px 16px -12px rgba(45,27,105,.25); }
   .app:hover { transform:translateY(-3px); box-shadow:var(--shadow); border-color:#cdeee0; }
@@ -167,11 +151,11 @@
   .app-no { font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--code); background:var(--code-bg); border:1px solid #cdeee0; padding:3px 9px; border-radius:7px; flex:none; }
   .app-name { font-family:var(--font-display); font-weight:600; font-size:15.5px; line-height:1.3; }
   .app-concept { font-size:13px; color:var(--muted); font-family:var(--font-mono); }
-  .app-link { margin-top:auto; display:inline-flex; align-items:center; justify-content:space-between; gap:8px; font-size:13.5px; font-weight:600; color:#065f46; background:var(--code-bg); border:1px solid #cdeee0; padding:9px 12px; border-radius:9px; transition:.15s; }
+  .app-link { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:13.5px; font-weight:600; color:#065f46; background:var(--code-bg); border:1px solid #cdeee0; padding:9px 12px; border-radius:9px; transition:.15s; }
   .app-link:hover { background:#059669; color:#fff; }
   .app-link.soon { color:var(--muted); background:#f7f6fc; border-color:var(--line); pointer-events:none; }
 
-  /* ---------- TA cards ---------- */
+  /* TA */
   .ta-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px; margin-top:28px; }
   .ta { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; display:flex; align-items:center; gap:14px; transition:.18s; }
   .ta:hover { transform:translateY(-3px); box-shadow:var(--shadow); border-color:#d9d2f7; }
@@ -180,7 +164,7 @@
   .ta-role { color:var(--muted); font-size:13px; }
   .ta-mail { color:var(--brand); font-size:12.5px; font-family:var(--font-mono); word-break:break-all; }
 
-  /* ---------- Tables (grading / pyq) ---------- */
+  /* Tables */
   .table-card { margin-top:26px; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; box-shadow:var(--shadow); }
   .table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
   table.tbl { width:100%; border-collapse:collapse; min-width:430px; }
@@ -190,27 +174,21 @@
   table.tbl tbody tr:hover td { background:#faf9ff; }
   .w-pill { font-family:var(--font-mono); font-weight:600; font-size:13.5px; color:var(--brand); background:#f0ecfe; padding:4px 11px; border-radius:999px; display:inline-block; }
   .due { font-size:14px; color:var(--muted); }
-
-  .scale-wrap { margin-top:22px; }
   .scale-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:14px; }
   .grade { background:#fff; border:1px solid var(--line); border-radius:12px; padding:13px 15px; display:flex; align-items:center; gap:11px; }
   .grade b { font-family:var(--font-display); font-size:16px; min-width:34px; }
   .grade span { font-family:var(--font-mono); font-size:13.5px; color:var(--muted); }
-  .note-line { font-size:13.5px; color:var(--muted); margin-top:12px; font-style:italic; }
+  .note-line { font-size:13.5px; color:var(--muted); margin-top:4px; font-style:italic; }
 
-  /* ---------- Policies ---------- */
+  /* Policies */
   .policy-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-top:28px; }
-  .policy { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; }
-  .policy h4 { font-family:var(--font-display); font-size:16.5px; font-weight:600; margin-bottom:10px; display:flex; align-items:center; gap:9px; }
+  .policy { background:var(--card); border:1px solid var(--line); border-top:3px solid var(--brand); border-radius:14px; padding:20px 22px; }
+  .policy h4 { font-family:var(--font-display); font-size:16.5px; font-weight:600; margin-bottom:10px; }
   .policy p, .policy li { font-size:14.5px; color:#45435f; }
   .policy ul { margin:0 0 0 18px; }
   .policy li { margin:6px 0; }
-  .p-ic { width:28px; height:28px; border-radius:8px; display:grid; place-items:center; flex:none; }
-  .policy.integrity { border-top:3px solid #e11d48; } .policy.integrity .p-ic { background:#fff1f2; }
-  .policy.late { border-top:3px solid var(--assign); } .policy.late .p-ic { background:var(--assign-bg); }
-  .policy.access { border-top:3px solid var(--notes); } .policy.access .p-ic { background:var(--notes-bg); }
 
-  /* ---------- Books ---------- */
+  /* Books */
   .book-block { margin-top:26px; }
   .block-label { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:600; font-size:16px; margin-bottom:12px; }
   .block-tag { font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; padding:3px 9px; border-radius:999px; }
@@ -226,7 +204,7 @@
   .book-get:hover { text-decoration:underline; }
   .software-note { margin-top:20px; background:#fff; border:1px dashed #cfc7ee; border-radius:13px; padding:15px 18px; font-size:14.5px; color:#45435f; }
 
-  /* ---------- PYQ ---------- */
+  /* PYQ */
   .session-pill { display:inline-flex; align-items:center; gap:6px; font-size:13px; background:#efe9fe; color:var(--brand); border:1px solid #ddd3fb; padding:4px 12px; border-radius:999px; margin-left:6px; font-family:var(--font-mono); }
   .pyq-type { display:inline-block; font-size:12.5px; font-weight:600; padding:5px 12px; border-radius:999px; font-family:var(--font-mono); white-space:nowrap; }
   .pyq-type.mid { background:var(--notes-bg); color:var(--notes); }
@@ -236,23 +214,34 @@
   .pyq-link:hover { text-decoration:underline; }
   .pyq-link.soon { color:var(--muted); pointer-events:none; font-weight:500; }
 
-  /* ---------- Footer ---------- */
+  /* Load error */
+  .load-error { background:#fff1f2; border-bottom:1px solid #ffd9de; color:#9f1239; padding:14px 0; font-size:14.5px; }
+
+  /* Footer */
   footer { background:#12102c; color:#cfcbe8; padding:44px 0; text-align:center; }
   .foot-brand { font-family:var(--font-display); font-weight:700; font-size:20px; letter-spacing:-.01em; }
   .foot-psp { background:linear-gradient(100deg,#a78bfa,#22d3ee); -webkit-background-clip:text; background-clip:text; color:transparent; }
   footer .fnote { font-family:var(--font-mono); font-size:13px; color:#8a86ad; margin-top:10px; }
   footer a { color:#a78bfa; }
 
-  /* ---------- Floating controls ---------- */
+  /* FAB */
   .fab { position:fixed; right:20px; bottom:24px; z-index:60; display:flex; flex-direction:column; gap:10px; }
   .fab button { width:46px; height:46px; border-radius:50%; border:none; cursor:pointer; display:grid; place-items:center; color:#fff; background:linear-gradient(135deg,var(--brand),var(--brand-2)); box-shadow:0 10px 24px -8px rgba(109,40,217,.65); transition:.22s; }
   .fab button:hover { transform:translateY(-3px) scale(1.06); }
   .fab button.hidden { opacity:0; pointer-events:none; transform:scale(.5); }
   @media (max-width:680px){ .fab { right:14px; bottom:16px; } .fab button { width:42px; height:42px; } }
 
-  /* ---------- Reveal ---------- */
   .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
   .reveal.in { opacity:1; transform:none; }
+
+  /* ===== Layout balance ===== */
+  .wrap { padding-left:clamp(20px,4.5vw,48px); padding-right:clamp(20px,4.5vw,48px); }
+  .goal-grid, .app-grid, .ta-grid,
+  .book-grid, .policy-grid, .scale-grid { display:flex; flex-wrap:wrap; justify-content:center; }
+  .goal-grid > *, .app-grid > *, .ta-grid > *,
+  .book-grid > *, .policy-grid > * { flex:1 1 262px; }
+  .scale-grid > * { flex:1 1 145px; }
+  .topics-list, .table-card, .desc-card, .fact-grid, .units { width:100%; }
 
   @media (prefers-reduced-motion:reduce){
     *{ transition:none!important; scroll-behavior:auto; animation:none!important; }
@@ -262,7 +251,10 @@
 </head>
 <body>
 
-<!-- ===== NAV ===== -->
+<div id="load-error" class="load-error" hidden>
+  <div class="wrap"><b>home.md could not be loaded.</b> Open the site through GitHub Pages (or a local server) — opening index.html straight from a folder blocks the file read.</div>
+</div>
+
 <nav class="nav">
   <div class="wrap nav-inner">
     <a class="brand-mark" href="#home"><span class="brand-badge">&lt;/&gt;</span> <span class="brand-word">PSP</span></a>
@@ -285,30 +277,21 @@
   </div>
 </nav>
 
-<!-- ===== 01 · HOME ===== -->
+<!-- 01 HOME -->
 <header class="hero" id="home">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">// IIIT Allahabad · C Language</span>
-      <h1>Problem Solving <span class="accent">with Programming</span></h1>
-      <p class="lead">Your one place to learn, practice, and solve. Notes, video lectures, live compilers, and assignments — organized topic by topic.</p>
-      <div class="hero-meta">
-        <span class="chip chip-instructor">Instructor: <b class="prof-name">Dr. Mohammed Javed</b></span>
-        <span class="chip">Course code: <b>PSP</b></span>
-        <span class="chip"><b>15</b> topics</span>
-        <span class="chip">Semester: <b>Fall 2026</b></span>
-      </div>
+      <span class="eyebrow" id="hero-badge">// loading…</span>
+      <h1><span id="hero-title">Problem Solving</span> <span class="accent" id="hero-highlight">with Programming</span></h1>
+      <p class="lead" id="hero-lead"></p>
+      <div class="hero-meta" id="hero-meta"></div>
       <div class="hero-cta">
         <a href="#topics" class="btn btn-primary">Explore topics →</a>
         <a href="#about" class="btn btn-ghost">Course info</a>
       </div>
     </div>
-
     <div class="editor" aria-hidden="true">
-      <div class="editor-bar">
-        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-        <span class="editor-name">psp.c</span>
-      </div>
+      <div class="editor-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="editor-name">psp.c</span></div>
       <div class="editor-body">
         <div class="ln"><span class="no">1</span><span class="pp">#include</span>&nbsp;<span class="str">&lt;stdio.h&gt;</span></div>
         <div class="ln"><span class="no">2</span></div>
@@ -322,8 +305,8 @@
   </div>
 </header>
 
-<!-- ===== 02 · OBJECTIVES ===== -->
-<section id="objectives" class="band-a">
+<!-- 02 OBJECTIVES -->
+<section id="objectives" class="band-a" hidden>
   <div class="wrap">
     <div class="sec-eyebrow">02 · Why this course</div>
     <h2 class="sec-title">Course Objectives</h2>
@@ -332,8 +315,8 @@
   </div>
 </section>
 
-<!-- ===== 03 · OUTCOMES ===== -->
-<section id="outcomes">
+<!-- 03 OUTCOMES -->
+<section id="outcomes" hidden>
   <div class="wrap">
     <div class="sec-eyebrow">03 · After the course</div>
     <h2 class="sec-title">Course Outcomes</h2>
@@ -342,61 +325,54 @@
   </div>
 </section>
 
-<!-- ===== 04 · COURSE INFO ===== -->
+<!-- 04 COURSE INFO -->
 <section id="about" class="band-c">
   <div class="wrap">
     <div class="sec-eyebrow">04 · About</div>
     <h2 class="sec-title">Course Information</h2>
     <p class="sec-sub">Timings, instructor details, and the full syllabus outline.</p>
-
-    <div class="desc-card reveal">
-      <p><b>Course Description.</b> In this course, students learn the problem-solving concepts with programming and practice them using the C language.</p>
-    </div>
-
+    <div class="desc-card reveal" id="desc-card" hidden><p id="desc-text"></p></div>
     <div class="fact-grid reveal" id="facts"></div>
-
-    <h3 class="sub-h">Prerequisites</h3>
-    <div class="prereq" style="margin-bottom:28px">
-      <span>Common sense &amp; logical reasoning</span>
-      <span>Basic mathematics</span>
+    <div id="prereq-block" hidden>
+      <h3 class="sub-h">Prerequisites</h3>
+      <div class="prereq" id="prereq"></div>
     </div>
-
-    <h3 class="sub-h">Course Outline</h3>
-    <div class="units reveal" id="units"></div>
+    <div id="units-block" hidden>
+      <h3 class="sub-h">Course Outline</h3>
+      <div class="units reveal" id="units"></div>
+    </div>
   </div>
 </section>
 
-<!-- ===== 05 · TOPICS ===== -->
-<section id="topics" class="band-b">
+<!-- 05 TOPICS -->
+<section id="topics" class="band-b" hidden>
   <div class="wrap">
     <div class="sec-eyebrow">05 · Learn &amp; practice</div>
     <h2 class="sec-title">Topics</h2>
     <p class="sec-sub">Open any topic for its notes, lectures, tutorials, live compilers, and assignments.</p>
-
     <div class="topic-tools">
       <div class="search">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
         <input id="search" type="text" placeholder="Search a topic… (e.g. Pointers, Loops)" />
       </div>
-      <span class="count-pill" id="count">15 topics</span>
+      <span class="count-pill" id="count">—</span>
     </div>
-
     <div class="topics-list" id="topics-list"></div>
   </div>
 </section>
 
-<!-- ===== 06 · APPLICATIONS ===== -->
-<section id="applications">
+<!-- 06 APPLICATIONS -->
+<section id="applications" hidden>
   <div class="wrap">
     <div class="sec-eyebrow">06 · Real world</div>
     <h2 class="sec-title">Applications</h2>
-    <p class="sec-sub">Small C programs that show where each concept is actually used. Open one to read the code and run it.</p>
+    <p class="sec-sub">Small C programs that show where each concept is actually used.</p>
     <div class="app-grid reveal" id="apps"></div>
   </div>
 </section>
 
-<!-- ===== 07 · TA TEAM ===== -->
-<section id="team" class="band-c">
+<!-- 07 TA TEAM -->
+<section id="team" class="band-c" hidden>
   <div class="wrap">
     <div class="sec-eyebrow">07 · People</div>
     <h2 class="sec-title">Teaching Assistant Team</h2>
@@ -405,14 +381,13 @@
   </div>
 </section>
 
-<!-- ===== 08 · GRADING ===== -->
-<section id="grading" class="band-b">
+<!-- 08 GRADING -->
+<section id="grading" class="band-b" hidden>
   <div class="wrap">
     <div class="sec-eyebrow">08 · Assessment</div>
     <h2 class="sec-title">Grading Policy</h2>
     <p class="sec-sub">Tentative weights — they may change if the department revises the plan.</p>
-
-    <div class="table-card reveal">
+    <div class="table-card reveal" id="grading-card">
       <div class="table-scroll">
         <table class="tbl">
           <thead><tr><th>Assessment</th><th>Weight</th><th>Due date</th></tr></thead>
@@ -420,76 +395,44 @@
         </table>
       </div>
     </div>
-
-    <div class="scale-wrap reveal">
+    <div class="reveal" id="scale-block" style="margin-top:22px" hidden>
       <h3 class="sub-h" style="margin-bottom:0">Grading Scale</h3>
-      <p class="note-line" style="margin-top:4px">May change based on overall class performance.</p>
+      <p class="note-line">May change based on overall class performance.</p>
       <div class="scale-grid" id="scale"></div>
     </div>
   </div>
 </section>
 
-<!-- ===== 09 · POLICIES ===== -->
-<section id="policies">
+<!-- 09 POLICIES -->
+<section id="policies" hidden>
   <div class="wrap">
     <div class="sec-eyebrow">09 · Ground rules</div>
     <h2 class="sec-title">Course Policies</h2>
     <p class="sec-sub">Read these once at the start of the semester so nothing comes as a surprise later.</p>
-
-    <div class="policy-grid reveal">
-      <div class="policy integrity">
-        <h4><span class="p-ic">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6z"/><path d="M12 9v4M12 16h.01"/></svg>
-        </span> Academic Integrity</h4>
-        <p>Plagiarism or unauthorized collaboration leads to a failing grade for that assignment and is reported to the academic board. Submit your own work.</p>
-      </div>
-
-      <div class="policy late">
-        <h4><span class="p-ic">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        </span> Late Work</h4>
-        <ul>
-          <li>Under 24 hours late — 10% penalty.</li>
-          <li>24–48 hours late — 20% penalty.</li>
-          <li>After 48 hours — not accepted without a prior extension.</li>
-        </ul>
-      </div>
-
-      <div class="policy access">
-        <h4><span class="p-ic">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2"/><path d="M6 8.5h12M12 8.5v6M12 14.5l-3 5.5M12 14.5l3 5.5"/></svg>
-        </span> Accessibility &amp; Accommodations</h4>
-        <p>Need specific classroom arrangements? Contact the Dean Academic or Dean Student Affairs office early in the semester so we can plan for it.</p>
-      </div>
-    </div>
+    <div class="policy-grid reveal" id="policies-grid"></div>
   </div>
 </section>
 
-<!-- ===== 10 · BOOKS ===== -->
-<section id="books" class="band-c">
+<!-- 10 BOOKS -->
+<section id="books" class="band-c" hidden>
   <div class="wrap">
     <div class="sec-eyebrow">10 · Study material</div>
     <h2 class="sec-title">Reference Books</h2>
     <p class="sec-sub">Start with the primary textbooks; use the reference books when you want a second explanation.</p>
-
-    <div class="book-block reveal">
+    <div class="book-block reveal" id="primary-block" hidden>
       <div class="block-label">Primary Textbooks <span class="block-tag primary">Start here</span></div>
       <div class="book-grid" id="primary-books"></div>
     </div>
-
-    <div class="book-block reveal">
+    <div class="book-block reveal" id="reference-block" hidden>
       <div class="block-label">Reference Books <span class="block-tag ref">Go deeper</span></div>
       <div class="book-grid" id="reference-books"></div>
     </div>
-
-    <div class="software-note reveal">
-      <b>Software you'll need.</b> A GitHub account and a modern code editor such as VS Code. Any of the online compilers listed on a topic page also works.
-    </div>
+    <div class="software-note reveal" id="software-note" hidden></div>
   </div>
 </section>
 
-<!-- ===== 11 · PYQ ===== -->
-<section id="pyq" class="band-b">
+<!-- 11 PYQ -->
+<section id="pyq" class="band-b" hidden>
   <div class="wrap">
     <div class="sec-eyebrow">11 · Exams</div>
     <h2 class="sec-title">Previous Year Questions</h2>
@@ -516,282 +459,259 @@
 
 <script>
 /* ============================================================
-   ✏️  EDIT ZONE — everything you need to change lives here.
-   Links marked "#" are placeholders. Replace "#" with the real
-   URL and the button turns active automatically.
+   Every word on this page comes from home.md.
+   Edit home.md — never this file.
    ============================================================ */
 
-// --- Quick facts (Course Information cards) ---
-const FACTS = [
-  { k: "Semester",   v: "Fall 2026" },
-  { k: "Credits",    v: "5.0 · L-T-P-S 3-0-4-0" },
-  { k: "Class hours",v: "Mon / Wed" },
-  { k: "Room",       v: "CC3, Room 5055 (Ground Floor)" },
-  { k: "Instructor", v: "Dr. Mohammed Javed", mail: "javed@iiita.ac.in" },
-  { k: "Course code",v: "PSP" }
-];
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const isLive = u => typeof u === "string" && (/^https?:\/\//.test(u.trim()) || /^mailto:/.test(u.trim()));
+const ext = u => (isLive(u) && !u.startsWith("mailto:")) ? ' target="_blank" rel="noopener"' : "";
+const show = (el, on) => { if (el) el.hidden = !on; };
 
-// --- Course Objectives (why you will learn C) ---
-const OBJECTIVES = [
-  "Understand the history of computing and how Computer Science reached where it is today.",
-  "Get familiar with computers, their hardware, and the ecosystem around them.",
-  "Learn your first programming language — C — from the ground up.",
-  "Build a problem-solving approach and start thinking like a programmer.",
-  "Meet real engineering problems and learn a beginner-friendly way to solve them."
-];
-
-// --- Course Outcomes (what you can do after learning C) ---
-const OUTCOMES = [
-  "You will know the basics of computer science advancement and its history.",
-  "You will recognise common CS equipment, jargon, and the wider ecosystem.",
-  "You will have a thorough working knowledge of the C programming language.",
-  "You will be able to break down a problem in a structured, industry-style way.",
-  "You will face new engineering problems with confidence instead of hesitation."
-];
-
-// --- Teaching Assistants (replace names + emails) ---
-const TAS = [
-  { name: "Subrata Pramanik", role: "Teaching Assistant", mail: "pmm2024003@iiita.ac.in", color: "#6d28d9" },
-  { name: "TA Name 2", role: "Teaching Assistant", mail: "", color: "#2563eb" },
-  { name: "TA Name 3", role: "Teaching Assistant", mail: "", color: "#db2777" },
-  { name: "TA Name 4", role: "Teaching Assistant", mail: "", color: "#059669" },
-  { name: "TA Name 5", role: "Teaching Assistant", mail: "", color: "#d97706" },
-  { name: "TA Name 6", role: "Teaching Assistant", mail: "", color: "#06b6d4" }
-];
-
-// --- Course outline (Units) ---
-const UNITS = [
-  { no: "Unit 1", title: "Foundations of Computing", items: [
-    "Computer hardware, Memory, CPU, Input/Output devices",
-    "Computer Networks, LAN, File Server, WAN, WWW, GUI/CLI, Ethernet, Wi-Fi, Modem, Switches, Routers, IP Address, Proxy, Gateway",
-    "Operating Systems, Installation/Uninstallation, Disk/Directory/File system, Application Software"
-  ]},
-  { no: "Unit 2", title: "C Basics, Operators & I/O", items: [
-    "Professional Ethics for Computer Programmers",
-    "Introduction to Computer Languages, Compiling and running a program",
-    "Problem analysis (requirement analysis, program design), Algorithms, Pseudocode and Flowchart",
-    "Structure of a simple C program (preprocessor directives, #include and #define, header & library files); Debugging, Testing and Documentation",
-    "Basic Data Types, Constants/Literals, Expressions, Statements and Comments",
-    "Operators: Arithmetic, Relational, Logical, Boolean, Ternary, Bitwise, Conditional, Sizeof, Comma; Precedence & Associativity; type conversion",
-    "Standard Input/Output, Mathematical Functions, Character Functions"
-  ]},
-  { no: "Unit 3", title: "Control Flow & Arrays", items: [
-    "Selection Statements (if/else, nested, switch)",
-    "Loop Structures (while, do/while, for, exit, break and continue)",
-    "Arrays: 1-D arrays, Passing arguments by value/address, 2-D arrays, Higher dimensional arrays"
-  ]},
-  { no: "Unit 4", title: "Functions, Strings & Pointers", items: [
-    "User-defined functions, Storage class and Scope, Macros, Nested and Recursive functions",
-    "Character Strings: definition and I/O, Null character, String library functions",
-    "Pointers and Addresses, Address operator, Pointer assignment, Address arithmetic, Chain of pointers, Pointers to array elements, Array of pointers, Pointers as function arguments, Functions returning pointers, Pointers and strings"
-  ]},
-  { no: "Unit 5", title: "Memory, Structures & Files", items: [
-    "Dynamic Memory Allocation (calloc(), malloc(), realloc(), free())",
-    "Structures: Definition & initialization, I/O, Structures as function arguments, Functions returning structures, Array of structures, Nested structures, Unions",
-    "Pointer to structure; Dynamic data structures: Linked List, Stack, Queue",
-    "Data Files: I/O statements, Reading data files, End-of-File, Generating data files"
-  ]}
-];
-
-// --- 15 topics. Each opens topic.html?t=N ---
-const TOPICS = [
-  { name: "Basic knowledge of computer",             unit: "Unit 1" },
-  { name: "Introduction",                            unit: "Unit 2" },
-  { name: "Data Types and Expressions",              unit: "Unit 2" },
-  { name: "Conditionals and Branching",              unit: "Unit 3" },
-  { name: "Loops and Iteration",                     unit: "Unit 3" },
-  { name: "Arrays",                                  unit: "Unit 3" },
-  { name: "Function",                                unit: "Unit 4" },
-  { name: "Recursion",                               unit: "Unit 4" },
-  { name: "Two Dimensional Array",                   unit: "Unit 3" },
-  { name: "Structures",                              unit: "Unit 5" },
-  { name: "Pointers",                                unit: "Unit 4" },
-  { name: "Dynamic Memory Allocation",               unit: "Unit 5" },
-  { name: "Linked List",                             unit: "Unit 5" },
-  { name: "File Handling and Command Line Argument", unit: "Unit 5" },
-  { name: "Sorting and Searching",                   unit: "Applications" }
-];
-
-// --- 15 demo applications. Put the real link in "url". ---
-const APPS = [
-  { name: "Simple Calculator",        concept: "Switch statement",        url: "#" },
-  { name: "Number Guessing Game",     concept: "for loop + if",           url: "#" },
-  { name: "Unit Converter",           concept: "Functions & data types",  url: "#" },
-  { name: "Student Grade Tracker",    concept: "1-D arrays",              url: "#" },
-  { name: "Prime Number Checker",     concept: "Loops & conditionals",    url: "#" },
-  { name: "Fibonacci Generator",      concept: "Recursion",               url: "#" },
-  { name: "Matrix Calculator",        concept: "2-D arrays",              url: "#" },
-  { name: "Tic-Tac-Toe Board",        concept: "2-D arrays + functions",  url: "#" },
-  { name: "Word & Character Counter", concept: "Strings",                 url: "#" },
-  { name: "Library Record System",    concept: "Structures",              url: "#" },
-  { name: "Marks Storage (any size)", concept: "malloc / free",           url: "#" },
-  { name: "Music Playlist",           concept: "Linked list",             url: "#" },
-  { name: "Undo History",             concept: "Stack",                   url: "#" },
-  { name: "Attendance File Manager",  concept: "File handling",           url: "#" },
-  { name: "Phonebook Search & Sort",  concept: "Sorting & searching",     url: "#" }
-];
-
-// --- Grading policy ---
-const GRADING = [
-  { item: "Assignments (Lab)", weight: "10%", due: "Weekly" },
-  { item: "Attendance",        weight: "5%",  due: "Lab + Lectures" },
-  { item: "Lab Exam 1",        weight: "10%", due: "Week 7" },
-  { item: "Midterm Exam",      weight: "25%", due: "Week 8" },
-  { item: "Lab Exam 2",        weight: "10%", due: "Week 14" },
-  { item: "Final Exam",        weight: "40%", due: "Exam week" }
-];
-
-const SCALE = [
-  { g: "A+", r: "90 – 100%" },
-  { g: "A",  r: "80 – 89%"  },
-  { g: "B+", r: "70 – 79%"  },
-  { g: "B",  r: "60 – 69%"  },
-  { g: "C",  r: "50 – 59%"  },
-  { g: "D/F",r: "Below 50%" }
-];
-
-// --- Books. Put a real link in "url" to activate the button. ---
-const PRIMARY_BOOKS = [
-  { title: "Engineering Problem Solving with C", meta: "Delores M. Etter · 4th Ed. (2016) · Pearson", url: "#" },
-  { title: "C: How to Program", meta: "Paul Deitel & Harvey Deitel · 9th Ed. (2023) · Pearson", url: "#" }
-];
-
-const REFERENCE_BOOKS = [
-  { title: "Computer Systems: A Programmer's Perspective", meta: "Randal E. Bryant & David R. O'Hallaron · 3rd Ed. · Pearson", url: "#" },
-  { title: "Problem Solving and Program Design in C", meta: "Jeri R. Hanly & Elliot B. Koffman · 8th Global Ed. · Pearson", url: "#" },
-  { title: "The C Programming Language", meta: "Brian Kernighan & Dennis Ritchie", url: "#" }
-];
-
-// --- PYQ ---
-const PYQ = [
-  { year: "2025", type: "End Sem", url: "#" },
-  { year: "2025", type: "Mid Sem", url: "#" },
-  { year: "2024", type: "End Sem", url: "#" },
-  { year: "2024", type: "Mid Sem", url: "#" }
-];
-
-/* ============================================================
-   ⚙️  Rendering below — no need to touch.
-   ============================================================ */
-
-const isLive = u => typeof u === "string" && /^(https?:)?\/\//.test(u.trim());
-const ext = u => isLive(u) ? ' target="_blank" rel="noopener"' : "";
-
-// Facts
-document.getElementById("facts").innerHTML = FACTS.map(f => `
-  <div class="fact">
-    <div class="k">${f.k}</div>
-    <div class="v">${f.v}${f.mail ? `<br><a href="mailto:${f.mail}">${f.mail}</a>` : ""}</div>
-  </div>`).join("");
-
-// Objectives + Outcomes
-document.getElementById("objectives-grid").innerHTML = OBJECTIVES.map((t, i) => `
-  <div class="goal obj"><span class="goal-no">${String(i + 1).padStart(2, "0")}</span><p>${t}</p></div>`).join("");
-document.getElementById("outcomes-grid").innerHTML = OUTCOMES.map((t, i) => `
-  <div class="goal out"><span class="goal-no">✓</span><p>${t}</p></div>`).join("");
-
-// Units
-document.getElementById("units").innerHTML = UNITS.map((u, i) => `
-  <details class="unit"${i === 0 ? " open" : ""}>
-    <summary>
-      <span class="unit-no">${u.no}</span>
-      <span>${u.title}</span>
-      <span class="caret">▾</span>
-    </summary>
-    <ul>${u.items.map(it => `<li>${it}</li>`).join("")}</ul>
-  </details>`).join("");
-
-// TA cards
-document.getElementById("ta-grid").innerHTML = TAS.map(t => `
-  <div class="ta">
-    <div class="ta-av" style="background:linear-gradient(135deg,${t.color},${t.color}cc)">${t.name.trim().charAt(0)}</div>
-    <div style="min-width:0">
-      <div class="ta-name">${t.name}</div>
-      <div class="ta-role">${t.role}</div>
-      ${t.mail ? `<a class="ta-mail" href="mailto:${t.mail}">${t.mail}</a>` : ""}
-    </div>
-  </div>`).join("");
-
-// Topics + search
-const listEl = document.getElementById("topics-list");
-function renderTopics(filter = "") {
-  const f = filter.trim().toLowerCase();
-  const shown = TOPICS.map((t, i) => ({ ...t, n: i + 1 })).filter(t => t.name.toLowerCase().includes(f));
-  document.getElementById("count").textContent = shown.length + (shown.length === 1 ? " topic" : " topics");
-  listEl.innerHTML = shown.length ? shown.map(t => `
-    <a class="topic-link" href="topic.html?t=${t.n}">
-      <span class="t-num">${t.n}</span>
-      <span class="t-titles">
-        <span class="t-name">${t.name}</span><br>
-        <span class="t-unit">${t.unit}</span>
-      </span>
-      <span class="t-open"><span class="t-lbl">Open</span> <span class="t-arrow">→</span></span>
-    </a>`).join("")
-    : `<p class="sec-sub">No topic matches that search. Try another word.</p>`;
+/* Parser for home.md
+     "## Name"  -> section
+     "- a | b"  -> item (fields split by |)
+     "-- text"  -> sub-line of the item above
+     other text -> plain paragraph                       */
+function parseSite(md) {
+  const out = {};
+  let cur = null, last = null, inComment = false;
+  for (const raw of md.split(/\r?\n/)) {
+    const t = raw.trim();
+    if (inComment) { if (t.includes("-->")) inComment = false; continue; }
+    if (t.startsWith("<!--")) { if (!t.includes("-->")) inComment = true; continue; }
+    if (!t) continue;
+    if (t.startsWith("## ")) { cur = t.slice(3).trim().toLowerCase(); out[cur] = { items: [], text: [] }; last = null; continue; }
+    if (!cur) continue;
+    if (t.startsWith("-- ")) { if (last) last.sub.push(t.slice(3).trim()); continue; }
+    if (t.startsWith("- ")) {
+      last = { f: t.slice(2).split("|").map(s => s.trim()), sub: [] };
+      out[cur].items.push(last);
+      continue;
+    }
+    out[cur].text.push(t);
+  }
+  return out;
 }
-renderTopics();
-document.getElementById("search").addEventListener("input", e => renderTopics(e.target.value));
 
-// Applications
-document.getElementById("apps").innerHTML = APPS.map((a, i) => `
-  <div class="app">
-    <div class="app-top">
-      <span class="app-no">${String(i + 1).padStart(2, "0")}</span>
-      <span class="app-name">${a.name}</span>
-    </div>
-    <div class="app-concept">${a.concept}</div>
-    <a class="app-link ${isLive(a.url) ? "" : "soon"}" href="${a.url}"${ext(a.url)}>
-      <span>${isLive(a.url) ? "Open code" : "Coming soon"}</span><span>${isLive(a.url) ? "↗" : "…"}</span>
-    </a>
-  </div>`).join("");
+const S = {};
+const items = k => (S[k] && S[k].items) || [];
+const text  = k => (S[k] && S[k].text.join(" ")) || "";
+const field = (k, label) => {
+  const hit = items(k).find(i => i.f[0].toLowerCase() === label.toLowerCase());
+  return hit ? hit.f.slice(1) : [];
+};
 
-// Grading
-document.getElementById("grading-body").innerHTML = GRADING.map(g => `
-  <tr><td>${g.item}</td><td><span class="w-pill">${g.weight}</span></td><td class="due">${g.due}</td></tr>`).join("");
-document.getElementById("scale").innerHTML = SCALE.map(s => `
-  <div class="grade"><b>${s.g}</b><span>${s.r}</span></div>`).join("");
+function renderHero() {
+  $("hero-badge").textContent = "// " + (field("hero", "Badge")[0] || "IIIT Allahabad · C Language");
+  $("hero-title").textContent = field("hero", "Title")[0] || "Problem Solving";
+  $("hero-highlight").textContent = field("hero", "Highlight")[0] || "with Programming";
+  $("hero-lead").textContent = field("hero", "Lead")[0] || "";
 
-// Books
+  const instructor = field("course info", "Instructor")[0];
+  const code = field("course info", "Course Code")[0];
+  const sem = field("course info", "Semester")[0];
+  const n = items("topics").length;
+  const chips = [];
+  if (instructor) chips.push('<span class="chip chip-instructor">Instructor: <b class="prof-name">' + esc(instructor) + "</b></span>");
+  if (code) chips.push('<span class="chip">Course code: <b>' + esc(code) + "</b></span>");
+  if (n) chips.push('<span class="chip"><b>' + n + "</b> topics</span>");
+  if (sem) chips.push('<span class="chip">Semester: <b>' + esc(sem) + "</b></span>");
+  $("hero-meta").innerHTML = chips.join("");
+  document.title = $("hero-title").textContent + " " + $("hero-highlight").textContent + " (PSP) · IIIT Allahabad";
+}
+
+function renderGoals(key, elId, cls, numbered) {
+  const list = items(key);
+  if (!list.length) return;
+  $(elId).innerHTML = list.map((it, i) =>
+    '<div class="goal ' + cls + '"><span class="goal-no">' +
+    (numbered ? String(i + 1).padStart(2, "0") : "&#10003;") +
+    "</span><p>" + esc(it.f[0]) + "</p></div>").join("");
+  show($(elId).closest("section"), true);
+}
+
+function renderCourseInfo() {
+  const d = text("description");
+  if (d) { $("desc-text").innerHTML = "<b>Course Description.</b> " + esc(d); show($("desc-card"), true); }
+
+  $("facts").innerHTML = items("course info").map(f => {
+    const mail = (f.f[2] && f.f[2].includes("@")) ? f.f[2] : "";
+    return '<div class="fact"><div class="k">' + esc(f.f[0]) + '</div><div class="v">' +
+      esc(f.f[1] || "") + (mail ? '<br><a href="mailto:' + esc(mail) + '">' + esc(mail) + "</a>" : "") +
+      "</div></div>";
+  }).join("");
+
+  const pre = items("prerequisites");
+  if (pre.length) {
+    $("prereq").innerHTML = pre.map(p => "<span>" + esc(p.f[0]) + "</span>").join("");
+    show($("prereq-block"), true);
+  }
+
+  const units = items("units");
+  if (units.length) {
+    $("units").innerHTML = units.map((u, i) =>
+      '<details class="unit"' + (i === 0 ? " open" : "") + '><summary>' +
+      '<span class="unit-no">' + esc(u.f[0]) + "</span><span>" + esc(u.f[1] || "") + "</span>" +
+      '<span class="caret">&#9662;</span></summary><ul>' +
+      u.sub.map(s => "<li>" + esc(s) + "</li>").join("") + "</ul></details>").join("");
+    show($("units-block"), true);
+  }
+}
+
+function renderTopics(filter) {
+  const all = items("topics").map((t, i) => ({ name: t.f[0], unit: t.f[1] || "", n: i + 1 }));
+  if (!all.length) return;
+  show($("topics"), true);
+  const f = (filter || "").trim().toLowerCase();
+  const shown = all.filter(t => t.name.toLowerCase().includes(f));
+  $("count").textContent = shown.length + (shown.length === 1 ? " topic" : " topics");
+  $("topics-list").innerHTML = shown.length
+    ? shown.map(t =>
+        '<a class="topic-link" href="topic.html?t=' + t.n + '">' +
+        '<span class="t-num">' + t.n + "</span>" +
+        '<span class="t-titles"><span class="t-name">' + esc(t.name) + "</span><br>" +
+        '<span class="t-unit">' + esc(t.unit) + "</span></span>" +
+        '<span class="t-open"><span class="t-lbl">Open</span> <span class="t-arrow">&rarr;</span></span></a>').join("")
+    : '<p class="sec-sub">No topic matches that search. Try another word.</p>';
+}
+
+function renderApps() {
+  const list = items("applications");
+  if (!list.length) return;
+  $("apps").innerHTML = list.map((a, i) => {
+    const url = a.f[2] || "#", live = isLive(url);
+    return '<div class="app"><div class="app-top"><span class="app-no">' +
+      String(i + 1).padStart(2, "0") + '</span><span class="app-name">' + esc(a.f[0]) + "</span></div>" +
+      '<div class="app-concept">' + esc(a.f[1] || "") + "</div>" +
+      '<a class="app-link' + (live ? "" : " soon") + '" href="' + (live ? esc(url) : "#") + '"' + ext(url) + ">" +
+      "<span>" + (live ? "Open code" : "Coming soon") + "</span><span>" + (live ? "&#8599;" : "&hellip;") + "</span></a></div>";
+  }).join("");
+  show($("applications"), true);
+}
+
+function renderTAs() {
+  const colors = ["#6d28d9", "#2563eb", "#db2777", "#059669", "#d97706", "#06b6d4"];
+  const list = items("ta team");
+  if (!list.length) return;
+  $("ta-grid").innerHTML = list.map((t, i) => {
+    const c = colors[i % colors.length], mail = t.f[1] || "";
+    return '<div class="ta"><div class="ta-av" style="background:linear-gradient(135deg,' + c + "," + c + 'cc)">' +
+      esc(t.f[0].charAt(0)) + '</div><div style="min-width:0">' +
+      '<div class="ta-name">' + esc(t.f[0]) + '</div><div class="ta-role">Teaching Assistant</div>' +
+      (mail ? '<a class="ta-mail" href="mailto:' + esc(mail) + '">' + esc(mail) + "</a>" : "") +
+      "</div></div>";
+  }).join("");
+  show($("team"), true);
+}
+
+function renderGrading() {
+  const g = items("grading"), sc = items("grading scale");
+  if (!g.length && !sc.length) return;
+  show($("grading"), true);
+  if (g.length) {
+    $("grading-body").innerHTML = g.map(r =>
+      "<tr><td>" + esc(r.f[0]) + '</td><td><span class="w-pill">' + esc(r.f[1] || "") +
+      '</span></td><td class="due">' + esc(r.f[2] || "") + "</td></tr>").join("");
+  } else show($("grading-card"), false);
+  if (sc.length) {
+    $("scale").innerHTML = sc.map(s =>
+      '<div class="grade"><b>' + esc(s.f[0]) + "</b><span>" + esc(s.f[1] || "") + "</span></div>").join("");
+    show($("scale-block"), true);
+  }
+}
+
+function renderPolicies() {
+  const list = items("policies");
+  if (!list.length) return;
+  $("policies-grid").innerHTML = list.map(p =>
+    '<div class="policy"><h4>' + esc(p.f[0]) + "</h4>" +
+    (p.sub.length === 1
+      ? "<p>" + esc(p.sub[0]) + "</p>"
+      : "<ul>" + p.sub.map(s => "<li>" + esc(s) + "</li>").join("") + "</ul>") +
+    "</div>").join("");
+  show($("policies"), true);
+}
+
 function bookCards(list, spine) {
-  return list.map(b => `
-    <div class="book">
-      <span class="book-spine" style="background:${spine}"></span>
-      <div style="min-width:0">
-        <div class="book-title">${b.title}</div>
-        <div class="book-meta">${b.meta}</div>
-        ${isLive(b.url) ? `<a class="book-get" href="${b.url}"${ext(b.url)}>Open book ↗</a>` : `<span class="book-get" style="color:var(--muted)">Link coming soon</span>`}
-      </div>
-    </div>`).join("");
+  return list.map(b => {
+    const url = b.f[2] || "#", live = isLive(url);
+    return '<div class="book"><span class="book-spine" style="background:' + spine + '"></span>' +
+      '<div style="min-width:0"><div class="book-title">' + esc(b.f[0]) + "</div>" +
+      '<div class="book-meta">' + esc(b.f[1] || "") + "</div>" +
+      (live
+        ? '<a class="book-get" href="' + esc(url) + '"' + ext(url) + ">Open book &#8599;</a>"
+        : '<span class="book-get" style="color:var(--muted)">Link coming soon</span>') +
+      "</div></div>";
+  }).join("");
 }
-document.getElementById("primary-books").innerHTML = bookCards(PRIMARY_BOOKS, "linear-gradient(180deg,#059669,#34d399)");
-document.getElementById("reference-books").innerHTML = bookCards(REFERENCE_BOOKS, "linear-gradient(180deg,#2563eb,#60a5fa)");
 
-// PYQ
-const pyqWrap = document.getElementById("pyq-wrap");
-pyqWrap.innerHTML = PYQ.length ? `
-  <div class="table-card"><div class="table-scroll">
-    <table class="tbl">
-      <thead><tr><th>Year</th><th>Exam type</th><th>Question paper</th></tr></thead>
-      <tbody>${PYQ.map(p => {
-        const cls = /end/i.test(p.type) ? "end" : /quiz/i.test(p.type) ? "quiz" : "mid";
-        return `<tr>
-          <td style="font-family:var(--font-display);font-weight:700;font-size:17px">${p.year}</td>
-          <td><span class="pyq-type ${cls}">${p.type}</span></td>
-          <td><a class="pyq-link ${isLive(p.url) ? "" : "soon"}" href="${p.url}"${ext(p.url)}>${isLive(p.url) ? "View paper →" : "Coming soon"}</a></td>
-        </tr>`;
-      }).join("")}</tbody>
-    </table>
-  </div></div>`
-  : `<p class="sec-sub" style="margin-top:20px">Question papers will be added soon.</p>`;
+function renderBooks() {
+  const p = items("primary textbooks"), r = items("reference books"), sw = text("software");
+  if (!p.length && !r.length && !sw) return;
+  show($("books"), true);
+  if (p.length) { $("primary-books").innerHTML = bookCards(p, "linear-gradient(180deg,#059669,#34d399)"); show($("primary-block"), true); }
+  if (r.length) { $("reference-books").innerHTML = bookCards(r, "linear-gradient(180deg,#2563eb,#60a5fa)"); show($("reference-block"), true); }
+  if (sw) { $("software-note").innerHTML = "<b>Software you'll need.</b> " + esc(sw); show($("software-note"), true); }
+}
 
-// Session + year
-const YY = new Date().getFullYear();
-document.getElementById("acad-session").textContent = YY + "–" + (YY + 1);
-document.getElementById("foot-year").textContent = YY;
+function renderPYQ() {
+  const list = items("pyq");
+  if (!list.length) return;
+  $("pyq-wrap").innerHTML =
+    '<div class="table-card"><div class="table-scroll"><table class="tbl">' +
+    "<thead><tr><th>Year</th><th>Exam type</th><th>Question paper</th></tr></thead><tbody>" +
+    list.map(p => {
+      const type = p.f[1] || "", url = p.f[2] || "#", live = isLive(url);
+      const cls = /end/i.test(type) ? "end" : (/quiz/i.test(type) ? "quiz" : "mid");
+      return '<tr><td style="font-family:var(--font-display);font-weight:700;font-size:17px">' + esc(p.f[0]) + "</td>" +
+        '<td><span class="pyq-type ' + cls + '">' + esc(type) + "</span></td>" +
+        '<td><a class="pyq-link' + (live ? "" : " soon") + '" href="' + (live ? esc(url) : "#") + '"' + ext(url) + ">" +
+        (live ? "View paper &rarr;" : "Coming soon") + "</a></td></tr>";
+    }).join("") + "</tbody></table></div></div>";
+  show($("pyq"), true);
+}
 
-// Mobile menu
-const hb = document.getElementById("hamburger");
-const navLinks = document.getElementById("navLinks");
+function startReveal() {
+  const els = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(en => {
+      en.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+  } else els.forEach(el => el.classList.add("in"));
+}
+
+async function boot() {
+  try {
+    const res = await fetch("home.md", { cache: "no-store" });
+    if (!res.ok) throw new Error("missing");
+    Object.assign(S, parseSite(await res.text()));
+  } catch (e) {
+    $("load-error").hidden = false;
+  }
+  renderHero();
+  renderGoals("objectives", "objectives-grid", "obj", true);
+  renderGoals("outcomes", "outcomes-grid", "out", false);
+  renderCourseInfo();
+  renderTopics("");
+  renderApps();
+  renderTAs();
+  renderGrading();
+  renderPolicies();
+  renderBooks();
+  renderPYQ();
+
+  const YY = new Date().getFullYear();
+  $("acad-session").textContent = YY + "\u2013" + (YY + 1);
+  $("foot-year").textContent = YY;
+  $("search").addEventListener("input", e => renderTopics(e.target.value));
+  startReveal();
+}
+boot();
+
+const hb = $("hamburger"), navLinks = $("navLinks");
 hb.addEventListener("click", () => {
   const open = navLinks.classList.toggle("open");
   hb.setAttribute("aria-expanded", open ? "true" : "false");
@@ -801,30 +721,16 @@ navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
   hb.setAttribute("aria-expanded", "false");
 }));
 
-// Floating buttons
-const toTop = document.getElementById("toTop");
-const toBottom = document.getElementById("toBottom");
+const toTop = $("toTop"), toBottom = $("toBottom");
 toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 toBottom.addEventListener("click", () => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }));
 function updateFab() {
   const y = window.scrollY;
-  const nearBottom = y + window.innerHeight > document.body.scrollHeight - 120;
   toTop.classList.toggle("hidden", y < 220);
-  toBottom.classList.toggle("hidden", nearBottom);
+  toBottom.classList.toggle("hidden", y + window.innerHeight > document.body.scrollHeight - 120);
 }
 window.addEventListener("scroll", updateFab, { passive: true });
 updateFab();
-
-// Reveal on scroll
-const revealEls = document.querySelectorAll(".reveal");
-if ("IntersectionObserver" in window) {
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-  }, { threshold: .12 });
-  revealEls.forEach(el => io.observe(el));
-} else {
-  revealEls.forEach(el => el.classList.add("in"));
-}
 </script>
 </body>
 </html>
