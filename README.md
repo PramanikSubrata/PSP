@@ -12,45 +12,51 @@
 | File / Folder      | What it is |
 |--------------------|-----------|
 | `index.html`       | Home page — lists all 15 topics. Each topic links to its own page. |
-| `topic.html`       | The topic viewer — opens a single topic and shows its content. |
-| `topics/` (folder) | **Your main content folder** — 15 sub-files, one per topic (`1.md` … `15.md`). |
+| `topic.html`       | The viewer — opens a topic hub OR a chapter, and shows its content. |
+| `topics/` (folder) | **All content lives here.** Two kinds of files (below). |
 
-You almost never touch `index.html` or `topic.html`.
-**To add or change a topic's content, you only edit the sub-file inside `topics/`.**
+**Two kinds of files inside `topics/`:**
+
+1. **Hub files** — `1.md`, `2.md` … `15.md` (one per topic).
+   These list the **chapters** of a topic. Example (`1.md`):
+   ```
+   ## Chapters
+   - Part 1 : Hardware & Memory | 1-1
+   - Part 2 : Software Basics   | 1-2
+   ```
+   Left of `|` = the title shown. Right of `|` = the chapter file name (without `.md`).
+
+2. **Chapter (content) files** — `1-1.md`, `1-2.md`, `2-1.md` …
+   Each holds the real content: **Description** (left) + **Notes / Videos / Assignment** (right).
 
 ---
 
-## How to edit a topic (for Sir / TA)
+## How to edit (for Sir / TA)
 
-1. Open the folder **`topics`** on GitHub.
-2. Click the topic you want, e.g. **`11.md`** for *Pointers*.
-3. Click the pencil (**Edit**) icon.
-4. Add your links. Each line looks like this:
+**To change what a chapter contains** → open its file, e.g. `topics/1-1.md`:
 
-   ```
-   - <label> | <link>
-   ```
+```
+## Description
+### 1. Your heading
+Write anything — text, lists, tables, or code.
 
-   Example:
+## Notes
+- Chapter Notes | "https://drive.google.com/xxxx"
 
-   ```
-   ## Notes
-   - Pointers – Chapter Notes | https://drive.google.com/xxxx
-   - Quick Revision Sheet     | https://drive.google.com/yyyy
+## Videos
+- Intro Lecture | "https://youtu.be/xxxx"
 
-   ## Videos
-   - Intro to Pointers        | https://youtu.be/xxxx
+## Assignment
+- Assignment 1 : 20 Aug 2026 | "https://forms.gle/xxxx"
+```
+Just paste your real link **inside the quotes** `""`. Add or remove lines freely.
 
-   ## Assignment
-   - 20 Aug 2026              | https://forms.gle/xxxx
-   ```
-
-5. Click **Commit changes**. The website updates within a minute — students see it live.
+**To add / rename / remove a chapter** → edit the topic's hub file (`topics/1.md`) `## Chapters` list, and create/delete the matching `1-N.md` file.
 
 **Notes**
 - If a link is not ready yet, leave it as `#`.
-- The 5 compilers (OnlineGDB, CodeChef, HackerRank, VS Code, LeetCode) appear
-  on every topic automatically — you do **not** add them.
+- The 5 compilers (OnlineGDB, CodeChef, HackerRank, VS Code, LeetCode) appear on every chapter automatically — you do **not** add them.
+- You almost never touch `index.html` or `topic.html`.
 
 ---
 
@@ -74,4 +80,4 @@ You almost never touch `index.html` or `topic.html`.
 
 ---
 
-_Maintained by Teaching Assistant Team (IIITA)._
+_Maintained by SUBRATA (IIITA)._
